@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rangga febrian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* Style tidak diubah, hanya ditambahkan komentar */
+        .content-wrapper {
+            -webkit-user-select: none; /* Untuk browser Safari dan Chrome lama */
+            -moz-user-select: none;    /* Untuk browser Firefox */
+            -ms-user-select: none;     /* Untuk browser Internet Explorer/Edge */
+            user-select: none;         /* Standar properti */
+            cursor: default;           /* Mengubah kursor menjadi panah biasa saat di atas teks */
+        }
+
+        .content-wrapper p, .content-wrapper h2, .content-wrapper i, .content-wrapper h1 {
+            pointer-events: none;      /* Menonaktifkan semua event mouse (termasuk klik) pada elemen ini */
+        }
+
+        :root {
+            --background-color: #02040a;
+            --text-color: #d0d8e8;
+            --primary-color: #03a9f4;
+            --secondary-color: #ff2e63;
+            --accent-color: #6effe5;
+            --header-font: 'Jura', sans-serif;
+            --body-font: 'Poppins', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; color-scheme: dark; }
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--background-color); }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 20px;
+            border: 2px solid var(--background-color);
+        }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--secondary-color); }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .loader-content {
+            font-family: var(--header-font);
+            font-size: 2rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px var(--accent-color);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: rgba(5, 8, 13, 0.85);
+            border-right: 1px solid rgba(3, 169, 244, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 2.5rem 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .side-nav-header {
+            font-family: var(--header-font);
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            padding: 0 1.5rem;
+        }
+        .side-nav-header span {
+            color: var(--secondary-color);
+            text-shadow: 0 0 8px var(--secondary-color);
+        }
+        .nav-list { list-style: none; width: 100%; }
+        .nav-item { margin-bottom: 0.25rem; }
+        .nav-link {
+            font-family: var(--header-font);
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.75rem 1.5rem;
+            position: relative;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--primary-color);
+            transition: height 0.3s ease;
+        }
+        .nav-link:hover {
+            color: white;
+            background: rgba(3, 169, 244, 0.1);
+        }
+        .nav-link.active {
+            color: white;
+            background: rgba(3, 169, 244, 0.15);
+        }
+        .nav-link.active::before { height: 100%; }
+        main {
+            margin-left: 250px;
+            padding: 0 4rem;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .glitch-title {
+            font-family: var(--header-font);
+            font-size: 5rem;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px rgba(255, 46, 99, 0.8), 0 0 10px rgba(3, 169, 244, 0.8);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            animation: text-flicker 3s linear infinite;
+        }
+        @keyframes text-flicker {
+            0%, 8%, 12%, 25%, 72% { opacity:0.1; }
+            2%, 9%, 20%, 30%, 70%, 77%, 100% { opacity:1; }
+        }
+        .subtitle {
+            font-family: var(--body-font);
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-color);
+            max-width: 600px;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-indicator:hover {
+    background-color: rgba(3, 169, 244, 0.2);
+}
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: scroll-down 2s infinite;
+        }
+        @keyframes scroll-down {
+            0% { transform: translate(-50%, 0); opacity: 0; }
+            40% { opacity: 1; }
+            80% { transform: translate(-50%, 20px); opacity: 0; }
+            100% { opacity: 0; }
+        }
+        .story-chapter, .prolog-epilog {
+            margin-bottom: 8rem;
+            padding-top: 5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .story-chapter.visible, .prolog-epilog.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .story-chapter h2, .prolog-epilog h2 {
+            font-family: var(--header-font);
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .story-chapter h2::after, .prolog-epilog h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 0 10px var(--primary-color), 0 0 5px var(--secondary-color);
+        }
+        .story-chapter p, .prolog-epilog p {
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            max-width: 75ch;
+            text-align: justify;
+        }
+        .menu-toggle { display: none; }
+        .modified {
+            background-color: rgba(3, 169, 244, 0.08);
+            border-left: 3px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        @media (max-width: 1024px) {
+            main {
+                margin-left: 0;
+                padding: 0 2rem;
+            }
+            .side-nav {
+                transform: translateX(-100%);
+            }
+            .side-nav.active {
+                transform: translateX(0);
+            }
+            .menu-toggle {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                z-index: 1001;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                backdrop-filter: blur(5px);
+            }
+            .menu-toggle span {
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: white;
+                margin: 3px 0;
+                transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            body.nav-open .menu-toggle span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+            body.nav-open .menu-toggle span:nth-child(2) { opacity: 0; transform: scale(0); }
+            body.nav-open .menu-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+            .glitch-title { font-size: 3rem; }
+            .subtitle { font-size: 1.1rem; }
+            .story-chapter h2, .prolog-epilog h2 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-music" loop autoplay>
+        <source src="inter.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+    <div id="preloader"><div class="loader-content">@helix.2016_</div></div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+    
+    <nav class="side-nav" id="side-nav">
+        <h1 class="side-nav-header">RANGGA<span>.LOG</span></h1>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#prolog" class="nav-link active">PROLOG</a></li>
+            <li class="nav-item"><a href="#bab1" class="nav-link">BAB 1 : Wajah Bule</a></li>
+            <li class="nav-item"><a href="#bab2" class="nav-link">BAB 2 : Ironi Senyum</a></li>
+            <li class="nav-item"><a href="#bab3" class="nav-link">BAB 3 : Donasi Miskin</a></li>
+            <li class="nav-item"><a href="#bab4" class="nav-link">BAB 4 : Mahakarya</a></li>
+            <li class="nav-item"><a href="#bab5" class="nav-link">BAB 5 : Pahlawan Digital</a></li>
+            <li class="nav-item"><a href="#bab6" class="nav-link">BAB 6 : Kerusuhan</a></li>
+            <li class="nav-item"><a href="#bab7" class="nav-link">BAB 7 : Sang IA</a></li>
+            <li class="nav-item"><a href="#bab8" class="nav-link">BAB 8 : Kebenaran</a></li>
+            <li class="nav-item"><a href="#bab9" class="nav-link">BAB 9 : Dunia Diam</a></li>
+            <li class="nav-item"><a href="#bab10" class="nav-link">BAB 10 : Dunia Fitnah</a></li>
+            <li class="nav-item"><a href="#bab11" class="nav-link">BAB 11 : Istirahat</a></li>
+            <li class="nav-item"><a href="#bab12" class="nav-link">BAB 12 : Tragedi</a></li>
+            <li class="nav-item"><a href="#bab13" class="nav-link">BAB 13 : Ruang Sefrekuensi</a></li>
+            <li class="nav-item"><a href="#bab14" class="nav-link">BAB 14 : Panggilan Takdir</a></li>
+            <li class="nav-item"><a href="#epilog" class="nav-link">EPILOG</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header class="hero" id="hero"> 
+            <h1 class="glitch-title" aria-label="Ganteng-Ganteng Miskin">Ganteng-Ganteng Miskin</h1>
+            <p class="subtitle">Dunia ini panggung. Kita cuma figuran yang lagi nulis ulang naskahnya.</p>
+            <p class="subtitle"><i>Hyperreality Genre Reality Based - Updated every 2 April</i></p>
+            <div class="scroll-indicator"></div>
+        </header>
+
+        <div class="content-wrapper">
+            <section class="prolog-epilog" id="prolog">
+                <h2>PROLOG</h2>
+                <p>Pernah nggak lo ngerasa kayak hidup lo ditulis sama tangan orang lain? Lo cuma pemeran tambahan, disuruh senyum di tengah luka yang gak bakal sembuh. Ketika lo tau kalo dunia mandang manusia dengan sebelah mata, cuman orang berduit atau good looking baru keterima dikalangan ini. Setidaknya lo tau lah apa nasib yang dialamin sisanya, yaitu manusia yang hidup sebagai NPC.</p>
+            </section>
+        
+            <section class="story-chapter" id="bab1">
+                <h2>BAB 1 : Wajah Bule. Dompet Tipis.</h2>
+                <p>Nama gue Rangga. Orang-orang pikir gue anak orang kaya cuma karena kulit gue putih dan mata gue cokelat terang. Ada yang bilang gue bule nyasar, ada juga yang sirik karena gue "keliatan ganteng padahal miskin." sering senyum-senyum dikira mahal, padahal kenyataannya... lebih sering senyum ke kasir Indomaret sambil nanya promo, daripada ke orang lain wkwk.</p>
+                <p>Gue lahir dari rahim seorang wanita kuat yang nyaris kehilangan akal sehatnya, tujuh bulan sebelum gue lahir. Nyokap gue, orang paling tangguh yang pernah gue kenal, pernah jadi saksi mata ketika suaminya ditembak mati di depan matanya sendiri oleh rentenir yang udah gerah ditagih gak dibayar. Ayah gue, kata orang-orang, tampan, bule, tapi juga penjudi ulung. Bukannya ninggalin warisan, dia malah ninggalin trauma, utang, aib, dan mungkin sepeda gowes yang pedalnya udah rusak. Nyokap gak pernah nikah lagi. Katanya cukup sekali jatoh cinta dan dikhianati oleh kenyataan, nyatanya ayah gue lebih cinta kartu remi lebih dulu daripada nyokap gue.</p>
+                <p>Gue tumbuh di rumah petakan yang dindingnya bisa dengerin rahasia tetangga. Tiap pagi, nyokap masak seadanya, dan gue, cowok bule dengan celana bekas dan sepatu robek, udah siap-siap buat ngelilingin komplek bawa tas isi majalah bekas yang gue gambar dan desain sendiri. Kadang gue sering desain atau nulis tentang berita yang lagi blow, cuman ya targetnya ke komplek yang banyak nenek-nenek tua dengan kursi andalan didepannya. Rela nulis buku yang padahal kita tinggal di negara yang daya minat bacanya itu rendah, gak heran kenapa majalah gue ketinggalan zaman?</p>
+                <p>Gue bangun sebelum azan subuh. Bukan buat tahajud, beda server, tapi buat bantu nyokap nyiapin adek gue sekolah. Adek gue baru kelas tiga SD, dan tugas nganterin dia sering jatoh ke tangan gue, soalnya nyokap kerja bersihin rumah orang.</p>
+                <p>Gue naik sepeda tua warisan bokap, pedalnya udah goyang, rantainya kadang loncat sendiri. Di keranjang depan ada dua hal penting: kotak makan adek gue, dan tumpukan majalah yang harus gue jual sebelum bel masuk sekolah bunyi. Kadang gue sempetin mampir ke warteg, bukan buat makan, tapi numpang isi botol minum gratisan. Warteg langganan, ibu-ibunya udah hafal muka gue. Katanya, "Rangga, kamu cakep, tapi hidup kamu kasihan amat nak."</p>
+                <p>Dan lucunya, iya, orang-orang sering ngira gue anak orang kaya. Soalnya kulit gue terang, mata cokelat terang kayak model Eropa, dan rambut gue semi-pirang. Tapi pas mereka tau gue gak punya motor, gak bisa top-up game, dan dompet yang isinya banyak perak... semua halu lenyap. Beberapa malah jadi makhluk paling kreatif dalam menciptakan rumor. Mulai dari, "Dia pura-pura miskin biar dikasianin." sampai yang paling menyakitkan, "Dengan lugu gantengnya berharap dia dapet duit dari cewek-cewek."</p>
+                <p>Tapi gue tahan. Gue tahan karena nyokap bilang, hidup itu bukan tentang apa kata orang. Tapi gimana lo bisa bikin diri lo berguna meski dunia gak ngelirik. Dan gue? Gue berusaha jadi berguna dengan cara gue. Jualan majalah hasil gambar tangan gue sendiri, nyisihin uang buat jajan adek, dan... ya, dikit-dikit buat warnet. Karena di sana, gue kayak orang autis.</p>
+                <p>Dulu waktu SD, gue masih ceria. Gue masih percaya kalau semua orang itu baik asal lo juga baik. Tapi semua itu berubah pas gue masuk SMP. Murid-murid di sana... keras. Egois. Suka tampil. Dan yang kayak gue? Gak masuk radar. Gak penting.</p>
+                <p>Tapi ada satu orang yang entah kenapa, tetap nyala di tengah kelamnya hari-hari gue: Nazwa. Cewek paling ribet sedunia yang kalo ketawa kayak sirine ambulans, tapi justru itu yang bikin gue diem-diem naksir. Rambutnya selalu wangi kayak iklan sampo, padahal kata anak-anak, dia gak pernah keringetan. Gayanya kadang alay, kadang sok dewasa, kadang kayak anak FYP TikTok yang gak sengaja jadi aesthetic. Tapi di mata gue? Dia kayak langit yang gue pandang dari bawah, jauh, gak nyampe, tapi indah banget buat ditatap. Gue tau, gue cuma figuran di cerita hidup dia. Tapi diam-diam, gue tulis namanya di setiap coretan majalah bekas yang gue jual.</p>
+                <p>Tiap hari ngelihat Nazwa dari jauh tuh rasanya kayak nonton film romantis dari balik jendela angkot, lo gak bayar tiket tapi baper duluan. Dan tiap dia lewat, sirkel-nya selalu rame kayak girlband Korea KW, lengkap dengan tawa nyinyir dan sorotan mata tajam yang bisa bedain mana sepatu ori, mana hasil lungsuran abang. Gue? Gue mah belakang latar. Kayak daun kering di taman sekolah, gak penting, tapi selalu ada.</p>
+                <p>Kadang gue suka halu. Maksud gue, lo gak bisa nyalahin anak SMP kayak gue yang tiap hari ditatap sinis tiba-tiba GR pas Nazwa, ya, the Nazwa, sekali waktu ngelirik ke arah gue sambil senyum dikit. Senyum yang mungkin sebenarnya buat cowok di belakang gue, atau mungkin cuma refleks gara-gara angin kena mata. Tapi ya, otak gue udah nyusun skenario Netflix: kita pacaran diem-diem, terus dia belain gue pas dibully, terus kita kabur ke Bali naik motor, yang mana mustahil, karena gue bahkan gak punya SIM. Tapi halu itu bikin gue bertahan. Bikin gue ngerasa kayak ada satu kemungkinan kecil, di alam semesta sana, Nazwa nganggep gue good looking. Atau minimal... bukan sampah.</p>
+                <p>Dari situ, gue mulai ngerti rasanya invisible. Diliatin cuma karena bule. Tapi dibully karena gak sesuai ekspektasi. Gue pendiem, bukan karena takut. Tapi karena udah tau apa yang keluar dari mulut mereka cuma bikin luka. Kadang suara mereka lebih tajam dari cutter di tempat pensil. Yang mereka pikir lucu, buat gue itu kayak tamparan bertubi-tubi. Tapi ya... gue tahan. Karena kalau gue nyaut, mereka cuma bakal nambah satu label lagi di kepala gue: "sok sensi".</p>
+            </section>
+    
+            <section class="story-chapter" id="bab2">
+                <h2>BAB 2 : Ironi di Balik Senyum Anak SMP</h2>
+                <p>Lo tau, waktu SD dulu… hidup gue cerah kayak kartun hari Minggu. Gue bisa lari-larian tanpa mikirin kenapa orang suka ngejudge. Ketawa gue lepas, gak mikir sepatu gue KW atau asli. Semua orang waktu itu cuma pengen main, ketawa, dan pulang bareng. Tapi semua berubah waktu gue masuk SMP.</p>
+                <p>Sekolah baru, aturan baru, dan yang paling bikin stres, wajah-wajah egois dan tukang caper yang dikira sok dewasa padahal isi kepala masih receh. Mereka pakai seragam rapi bukan buat belajar, tapi buat adu gengsi. Mulut manis depan guru, tapi ketika dibelakang berlagak sok berkuasa yang bisa ngatur. Gue cuma cowok bule yang kelihatan kaya... padahal dompet gue lebih banyak struk hutang daripada duit. Gue introvert, diem, dan jujur aja kadang telat mikir kalo lagi diajak ngobrol. Bukan karena bego, tapi karena terlalu banyak mikirin besok makan apa buat keluarga.</p>
+                <p>Gini, SMP tuh kadang bukan sekolah beneran. Lu dateng buat belajar, tapi malah kayak ikut lomba siapa paling banyak drama. Kalo HP lu Android kentang, jangan harap dianggap manusia, lu kayak makhluk mitologi yang nyasar ke dunia modern. Lo bersin dikit, dibilang abk. Lo diem aja, dibilang psikopat introvert. Lo aktif, dibilang attention seeker. Sirkelnya? Bukan pertemanan, tapi squad sinetron yang tiap hari skripnya diganti sesuai mood hormon puber. Basis? Tiap minggu latihan tawuran, tapi ngisi LKS aja ngeluh “capek bu.” Kadang gue liat mereka kayak NPC GTA, muter-muter sekolah tanpa arah sambil ngomongin drama orang. Gue gak yakin cuman satu sekolah kek gini atau masih banyak yang lain.</p>
+                <p>Beberapa bulan berjalan, rumor-rumor mulai berkembang dan makin out of the box. Katanya gue itu anak sombong lah, sok jago lah, sok bule padahal jualan majalah di pasar. Dan lo tau lah bocah-bocah SMP seperti apa. Mereka suka banget ngarang cerita seolah hidup mereka reality show. Puncaknya terjadi hari itu. Gue ke sekolah tanpa sarapan, kepala gue nyut-nyutan karena malem sebelumnya mikir, "Besok makan apa ya? Kalo nyokap sama adek gue mati kelaparan gue harus meluk siapa?" Gue jualan belum laku, dan duit di dompet cuma cukup buat bayar angkot. Bahkan gue rela ngorbanin sepeser demi buat jatah jajan adik gue, demi bisa tetep sekolah.</p>
+                <p>Tiap pagi, sebelum mentari sempat mikir buat terbit sempurna, gue udah goes sepeda lusuh buat nganterin adek gue. Si bocah kecil itu satu-satunya hal yang masih bikin hidup gue punya arah, walau tipis kayak saldo GoPay pas akhir bulan. Abis nganterin dia, gue lanjut jualan majalah. Keliling. Nge-track jalanan, dari gang becek sampai kompleks elit yang gerbangnya kayak benteng kerajaan. Kadang dapet receh, kadang cuma senyuman palsu. Dan kadang... cuma omelan kayak “maaf ya dek, saya nggak baca majalah” padahal jelas-jelas lagi scroll fesbuk berjam-jam.</p>
+                <p>Dan di sekolah... di sinilah tempat anomali itu dimulai. Ada satu sirkel cewek, sirkel ‘glow-up-but-rotten-inside’, yang selalu nyinyir tiap ngeliat gue. Pemimpinnya namanya Talitha, ratu toxic dengan followers IG lebih banyak dari jumlah kata di buku PKN. Dia dan krucil-krucilnya suka ngelewatin gue sambil bisik-bisik, “Ih itu tuh yang sok-sokan jualan, katanya pernah viral tapi sekarang kek tukang koran gagal,” terus ketawa kayak efek suara sinetron. Lucu sih, kalau enggak nyesek. Tapi gue jalanin terus. Jualan, nganter adek, nabung buat sesuatu yang bahkan belum tentu diterima. </p>
+                <p>Di jam istirahat, ada salah satu anak di kelas, gue sebut aja si Endar. Anak yang suka ngatain orang sambil ketawa bareng gengnya. Dia nawarin minuman. “Eh Rangga, haus gak? Nih air jeruk gue, dingin cuy.” Gue yang udah pusing setengah mati, gak mikir panjang. Gue minum. Sekali teguk. Rasanya... bukan jeruk. Tapi KENCING.</p>
+                <p>Gue langsung nahan muntah sambil batuk-batuk. Satu RT ketawa. Bahkan ada yang ngerekam. Gue pengin hilang dari dunia. Bukan karena rasanya, tapi karena harga diri gue yang ditertawakan kayak badut depan Indomaret. Gue lari ke kamar mandi. Gue basuh muka, tapi air di wastafel enggak cukup buat ngapus rasa malu itu. Di dalam bilik kamar mandi, gue duduk, nutup muka, dan nahan isak. Dunia ini jahat. Dan ironinya gue harus pura-pura kuat. Karena nangis di sekolah, apalagi cowok, bisa jadi bahan roasting sebulan.</p>
+                <p>Tiba-tiba pintu kamar mandi diketuk pelan. “Rang… lo di dalem?” Suara itu... suara Andika. Satu dari sedikit orang yang gak ikut-ikutan. “Gue bawa air mineral... gue gak tau mereka bakal gituin lo, bro.” Gue diem. Tapi akhirnya gue buka pintunya sedikit. Dika duduk di lantai, nyodorin gelas plastik. Gue terima tanpa kata-kata. Dia gak banyak tanya, dia cuma diem. Kadang temen sejati itu bukan yang ngasih solusi, tapi yang duduk bareng lo di lantai WC sekolah sambil dengerin lo bernapas berat.</p>
+                <p>“Rang,” katanya akhirnya, “mereka tuh bodoh. Lo itu ganteng dan cewek diluar sana pasti pada naksir, cuma belum waktunya bersinar aja. Tapi nanti... giliran lo bakal dateng.” Gue cuman ngangguk, tapi dalam hati... gue janji satu hal: gue gak bakal lupa rasa urine itu. Dan bukan, bukan karena trauma. Tapi karena itu titik dimana gue sadar... senyum anak SMP itu sering cuma topeng.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab3">
+                <h2>BAB 3 : DONASI LAYAKNYA ORANG MISKIN</h2>
+                <p>Waktu gue jalan pulang sore itu, angin berasa beda. Bukan karena dinginnya, tapi karena dada gue masih sesak habis kejadian tadi. Tapi anehnya, ada rasa hangat yang nempel, bukan dari matahari, tapi dari ucapan Dika, satu-satunya manusia normal yang kayaknya Tuhan sisain buat gue. Dia bilang, “Giliran lo bakal dateng.”. Dan kata-kata itu masih nyangkut di kepala gue sampai gue nyampe rumah.</p>
+                <p>Begitu gue buka pintu rumah, gue liat emak gue duduk di lantai, napasnya berat. Mukanya pucat, tangannya gemeteran, dan satu hal yang paling nusuk… suara batuknya kayak kereta tua disuruh ngebut. “Mak?” gue panggil pelan. Dia senyum. Bukan senyum lega, tapi senyum yang dipaksa, kayak ngasih harapan ke anaknya padahal dia sendiri udah remuk. “Mak gak papa… cuma masuk angin.”</p>
+                <p>Masuk angin. Klise. Tapi gue tau, masuk angin versi emak gue itu kadang nyamar jadi gejala komplikasi yang gak bisa dibayar pake vitamin murah atau bumbu dapur. Malam itu gue nggak bisa tidur. Adik gue masih kecil, lagi ngelantur baca majalah buatan gue. Gue peluk dia pelan, dan dalam hati, gue mikir… kalau besok emak beneran tumbang, kita makan pake apa? Dan dari situ, misi dimulai.</p>
+                <p>Gue cari kaleng bekas sarden, gue tulis pake spidol: “DONASI UNTUK MAMA RANGGA YANG SAKIT. TOLONG DENGAN IKHLAS.” Esoknya, gue bawa kaleng itu ke sekolah. Gue pikir, ini bakal jadi hari penuh harapan. Tapi sekali lagi... gue lupa, ini bukan anime. Ini realita. Baru masuk gerbang, beberapa anak tolol liatin gue kayak ngeliat pengemis nyasar. “Woi Rangga, lo kira ini pasar amal? Goblok banget hahaha." “Jangan boong pantek! dasar GTM: ganteng tapi miskin!"</p>
+                <p>Gue ngedeketin guru BK. Bukannya nanya kondisi emak gue, dia malah nyuruh gue balik ke kelas dan berhenti ngemis. Dia bilang, “Sekolah ini tempat belajar, bukan tempat dagang rasa kasihan.” Ironis? Banget. Apalagi guru itu baru minggu lalu cerita di kelas tentang "nilai empati dan solidaritas sosial." Bahkan kepala sekolah pun cuma melirik kaleng gue sekilas. Sambil benerin dasinya yang kegedean, dia bilang: “Kamu bikin malu sekolah, nanti kita dicap sekolah miskin loh, udah sana!”</p>
+                <p>Sekolah miskin? Bro, yang miskin bukan sekolahnya. Tapi empatinya. Beberapa anak malah ngakak dan nyoretin kaleng donasi gue pake spidol. Ada yang nulis “buat beli skin ML” dan satu lagi nempel stiker: “Jual beli harga diri, pejabat boleh nego!.” Gue pengin marah. Tapi gue cape. Dan gue tau marah di tempat kayak gini sama aja kayak nimpukin batu ke dinding, mantul ke mata lo.</p>
+                <p>Gue duduk di bangku belakang kelas, nyari napas. Satu-satunya yang ngasih receh adalah anak kelas 7 yang polos, mungkin belum ketularan racun senior. Sisanya? Ngelirik pun enggak, boro-boro ngelirik, yang ada kasian sama gue. Jam istirahat, gue keliling ke tiap kelas. Tapi gue bukan orang yang maksa. Gue cuman bilang pelan, “Kalau bisa bantu, bantu… Kalau enggak bisa, gak apa-apa.” Tapi jawabannya rata-rata: “Maap ya, gue buat top up FF.” “Aduh lagi bokek.” “Ngapain bantuin? Emaknya juga bukan orang penting”. Sore itu, gue pulang bawa kaleng yang isinya cuma gemerincing perasaan gagal. Dan kepala gue muter-muter mikir…</p>
+                <p>Gue hidup di negara yang katanya "beradab", tapi anak kayak gue minta tolong buat orang tuanya malah dibilang ngemis. Sementara, guru-guru sibuk ngurusin dasi nggak sesuai kelas, rambut 3 cm kayak tokoh anime, dan sepatu yang nggak hitam kinclong, kayak itu bisa bikin anak-anak jadi pinter. Dan pemerintah? Ah, sudahlah. Mereka baru peduli kalo lo viral duluan.</p>
+                <p>Gue kira, guru itu panutan. Gue kira, mereka bakal jadi tempat ngadu pas gue dicap miskin dan hidup gue dibantai opini. Tapi ternyata, harapan gue kayak absensi jam pertama: gak dianggep. Guru-guru di sekolah cuma bisa bilang, “Kita doakan ya semoga Rangga bisa melalui semua ini,” terus balik ngopi sambil ngerumpi. Bahkan ada yang bisik-bisik bilang, “Anak itu tampangnya kayak baik, tapi ternyata ya gitu…” Satu guru BK bahkan sempet nyamperin gue, tapi bukan buat nanya kabar. Dia cuma bilang, “Kamu harus sadar posisi kamu sekarang, jangan jadi beban sekolah.” Gokil. Gue udah kayak tokoh antagonis di cerita mereka, padahal buku pelajaran PKN mereka yang ngajarin tentang persatuan dan keadilan sosial.</p>
+                <p>Sila ke-5 katanya: "Keadilan sosial bagi seluruh rakyat Indonesia." Tapi ternyata itu cuma caption, bukan kenyataan. Keadilan? Kayak promosi cashback doang. Berlaku buat yang punya kuasa. Gue liat mama di rumah makin lemah, suara batuknya kayak mau mokad. Tapi gak ada satu pun guru, wali kelas, atau pihak sekolah yang peduli. Yang penting mereka bisa input nilai dan pulang cepat. Cuek mereka lebih dingin daripada AC ruang guru.</p>
+                <p>Dan gue tetep jalanin hidup. Jualan majalah tiap pagi kayak biasa. Nggak peduli kaki gue gemeter, atau saku gue cuma bunyi recehan. Pernah sekali dapet seribu, dikasih sambil bilang, “Ih, masih jualan? Nggak malu apa?” Yang ngomong? Sirkel cewek-cewek elite yang nyebut dirinya “The Ladies”, padahal isi otaknya kayak sinyal WiFi di WC sekolah, lemot and gak nyambung. Salah satunya namanya Mira, siswi paling jago ngejatohin mental lewat story IG. Senyumnya manis, tapi hatinya bisa ngelolosin koruptor. “Masa cowok jualan? Cowok mah harusnya naik motor, bukan sepedaan bawa kertas!” katanya, diiringi tawa fake dari gengnya. Gue sih nyengir aja. Dalam hati, “Mending gue jualan daripada jadi lo yang hidup dari validasi like dan skin care hasil minta bokap.” Tapi ya, tetep. Sakit itu nyata walau cuma dibatin.</p>
+                <p>Setiap pagi, gue juga tetep anterin adek gue ke sekolah. Tangannya kecil, tapi genggamannya anget. Kadang dia nanya, “Bang, hari ini kita dapet uang berapa?” dan gue cuma bilang, “Cukup buat beli gorengan.” Padahal kadang cuma cukup buat beli rasa sabar. Gue lalu pulang membawa PHP. Malam itu gue duduk depan rumah, liatin bintang. Gue tau satu hal: Keadilan itu mahal. Dan di lingkungan gue, empati kayak barang langka. Tapi gue nggak bakal berhenti. Kalau dunia nyata nolak gue, Gue bakal cari tempat lain. Dunia digital. Dunia yang nggak peduli muka lo gimana, tapi peduli isi kepala lo.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab4">
+                <h2>BAB 4 : LAPTOP RONGSOKAN YANG BERISI MAHAKARYA</h2>
+                <p>Gue inget banget malam itu. Habis naruh kaleng donasi yang gagal itu ke pojokan kamar, gue duduk lama di depan laptop tua gue. Layarnya udah agak burem, suaranya kadang mendadak bunyi kayak suara pesawat jatoh, lo mungkin bakal ngira itu sampah yang gue pungutin Jumat kemarin. tapi buat gue... itu benda sakral. Laptop ini... satu-satunya jendela buat gue kabur dari realita. Karena disitu gue punya keahlian bawaan dari lahir, yaitu ahli dalam bermain internet.</p>
+                <p class="modified">Kalo superhero punya palu, tameng, atau jubah, gue punya ini: Laptop Acer 2010, lecet, karatan, tompelnya gede, tapi sakti.</p>
+                <p>Gue nyalain layarnya, konekin hotspot ke HP gue yang tinggal kuota 300 MB hasil nyisihin duit jajan. Kadang sinyalnya suka kayak mood emak kalau bangun kesiangan, naik turun seenaknya. Tapi gue paksain sampe bener-bener bisa. Sakti... karena dia saksi. Saksi gue ngelewatin malam-malam sepi di warnet pinggir gang, tanya-tanya abang warnet yang mukanya kayak udah disatuin sama monitor, “Bang, cara ngerti proxy sama VPN gimana ya?” Dijawabnya cuma, “Lu bocah SMP ya? Jangan buka bokep, ya.” Gue geleng. “Gak, bang. Gue nyari jalur kabur.”</p>
+                <p>Di situ gue mulai... Gue pelajarin cara kerja IP address, enkripsi, firewall. Baca forum-forum gelap yang tulisannya lebih absurd dari caption selebgram. Gue bikin akun anonim, trial-and-error pake VM (yang kadang nge-lag kayak otak pas upacara), dan tiap gue salah pencet, paniknya tuh kayak ketauan nyontek pas ulangan. Gue belajar sniffing pake Wireshark. Pernah ada bapak-bapak di warkop yang nanya, “Dek, itu kamu main game ular ya?” Gue senyum, “Enggak, Pak. Ini saya lagi belajar menangkap paket data.” “Wah, kamu mau jadi kurir?” Gue diem. Dalam hati: "Iya, Pak... Kurir kebenaran."</p>
+                <p>Gue sambung ke WiFi gratisan mesjid sebelah, ngumpet di balik pohon, laptop gue taruh di tas bekas donasi sekolah, ngetik sambil kedinginan, sambil belajar tentang OSINT, gimana cara cari informasi dari hal yang orang kira gak penting. Gue pelajari DNS leak, Tails OS, bahkan cara nyusupin informasi lewat gambar. Gue mulai ngerti satu hal: Di internet, pengetauan itu senjata. Dan tiap klik yang gue lakuin malam itu, bukan cuma buat cari pelarian. Tapi buat jadi pelawan.</p>
+                <p>Gue udah belajar internetan berbulan-bulan, dari pagi sampe malem, kadang sampe lupa makan. Belajar sendiri, nanya-nanya ke abang-abang warnet, numpang WiFi di masjid, bahkan pernah duduk di depan Indomaret jam 10 malem cuma buat dapet sinyal. Gue pelajarin hal-hal yang nggak semua orang SMP ngerti. Kayak gimana cara kerja server, apa itu HTML, sampe gimana nyusup ke sistem pakai celah keamanan kecil. Gue udah belajar semua itu… demi satu hal: jadi ahli. Bukan buat gaya-gayaan. Tapi buat bertahan.</p>
+                <p>Tapi lucunya hidup emang kadang kayak sinetron murah. Pas di kelas TIK, Bu Reni nyuruh bikin tugas: “Anak-anak, hari ini kita bikin game sederhana pakai Scratch ya!” Temen-temen pada semangat narik-narik karakter kucing di layar. Ada yang bikin kucingnya joget, ada yang bikin lompat-lompat sambil bunyi 'meong'. Gue? Gue malah buka CNN Media. Iseng scroll berita politik dunia. Muka gue serius. Kayak anak baru belajar pegang komputer. Padahal ya… deep down, gue udah bisa coding Python buat scraping data, ngerti cara kerja enkripsi, bahkan bisa ngumpulin informasi dari situs yang biasa orang anggap "gelap".</p>
+                <p>Bu Reni lewat belakang gue, lihat layar. “Oh… Rangga belum ngerti Scratch ya? Gapapa, nanti belajar pelan-pelan aja ya.” Gue cuma angguk kecil. “Iya, Bu. Saya gaptek.” Padahal di dalam hati: Bu, saya bisa retas lemari password sekolah kalo saya niat. Tapi yaudah, anggap aja saya anak cupu. Gue belajar satu hal dari semua itu: Kadang pura-pura bodoh itu perlindungan terbaik. Karena semakin mereka anggap kita biasa, semakin aman senjata utama kita disimpan.</p>
+                <p>Dan malam itu, sehabis pura-pura "gaptek" di kelas, gue nyalain laptop Acer 2010 gue, yang warnanya udah lebih ke arah coklat karatan daripada abu-abu. Tombol space-nya goyang, kipasnya bunyi kayak blender rusak, tapi isinya? Dunia yang gak semua orang ngerti. Gue lalu buka Threads, yang lagi viral di kalangan bocah SMP. Kursor berkedip. Dan jari gue mulai nari menulis:</p>
+                <p> “Selamat datang di dunia nyata yang disembunyikan. Kadang murid-murid nggak sadar kalau mereka hanya dipermainkan oleh sekolah, bukan menciptakan inovator, tapi pekerja yang berakhir ditusuk rantai kemiskinan. Hanya di akun ini yang berani membongkar sistem pendidikan negara kita tercinta."</p>
+                <p>Gue mulai nulis thread, bukan thread biasa, tapi semacam 1001 catatan dosa pemimpin. Thread itu nyentil tentang ironi sekolah.  Tentang guru-guru yang sibuk razia sepatu, tapi gak pernah peduli sama anak-anak yang diem-diem depresi. Tentang guru BK yang katanya konseling, tapi lebih jago nge-judge daripada ngedengerin. Gue tulis pakai gaya sok misterius. Dan pastinya, gue post bukan pakai nama asli.</p>
+                <p class="modified">Akun itu lahir malam itu juga: @helix.2016. Gue sengaja ambil angka 2016, taun terakhir gue ngerasa hidup normal. Waktu emak masih sehat, waktu adik gue masih bisa tidur pake boneka, bukan kelaperan. Dan dalam semalam, akun itu jadi jendela perang. Tapi... di saat dunia maya mulai terbuka buat suara gue, dunia nyata malah makin nutup. Berharap besok akan viral thread-threads gue.</p>
+                <p>Keesokan harinya di sekolah, orang-orang mulai bisik-bisik soal thread misterius. Murid-murid yang dulu rajin ngebully mulai saling curiga. Bahkan guru-guru mulai pasang spanduk: "Berpikir Sebelum Menulis. Menulis Bisa Masuk Penjara." Heh, lucu ya. Gue baru sadar, suara bisa dianggap kriminal kalo terlalu jujur. Apalagi menulis yang padahal setiap hari kita sekolah disuruh nulis something shit yang bakal berakhir ditong sampah. Tapi puncaknya? Gue liat Farel, anak yang dulu paling galak ngejekin gue, sekarang duduk sendiri di kantin. Mukanya pucat, kayak abis mimpi buruk. Thread gue nyebut inisial dia, lengkap sama rekaman suara dia ngancam anak kelas 7 buat ngerjain PR.</p>
+                <p>Tapi gue nggak puas. Karena dunia ini bukan cuma tentang bully. Tapi tentang sistem yang bikin bully itu tumbuh kayak jamur di musim hujan. Gue mulai nyari celah. Gue bongkar sistem IT sekolah, bukan buat ngerusak, tapi buat nyimpen bukti-bukti: CCTV pas guru ngelabrak siswa cuma karena kaos kaki beda sebelah. Chat WA guru-guru yang ngeledek siswa di grup. Absen palsu guru yang sering titip tanda tangan. Gue kumpulin semua. Dan semakin banyak data yang gue dapet, semakin jelas: Sekolah ini bukan tempat belajar. Ini panggung bro. Anak-anak jadi figuran. Guru jadi aktor. Dan nilai? Cuma properti, bisa dipoles, bisa dijual. Tapi yang paling ngenes?</p>
+                <p>Ada satu guru yang gue liat di CCTV tidur di ruang guru siang-siang. Tidurnya nyenyak, kayak habis kerja 3 shift. Tapi pas gue cari tau, ternyata dia ketiduran abis ngabisin waktu ngecek rambut siswa dari pagi sampe siang. Bukan karena dia cape mikirin pelajaran. Tapi karena cape ngurusin hal-hal remeh. Dan saat semua orang sibuk ngeberesin rambut 3 cm, dasi kelas A atau B, dan warna sepatu… gue sibuk mikirin gimana caranya biar emak gue bisa dapet antibiotik. Keadilan itu lucu. Lebih gampang nemuin diskonan Indomie daripada nemuin guru yang bener-bener peduli. Gue mulai masuk ke fase “gak peduli.” layaknya pemimpin disini. Kalau dunia nyata nolak gue, gue terima. Tapi jangan salahin gue kalau akhirnya gue jadi hantu digital yang siap ngebongkar semuanya.</p>
+                <p>Dan akhirnya... Thread-thread gue mulai viral. Banyak siswa diam-diam kirim DM: “Bang, tolong dong bongkar si X.” “Bang, gue dibully, bisa bantu?” Gue bantu. Tapi gue nggak minta duit. Gue cuma taro satu barcode kecil: Donasi untuk Papua. Padahal... itu buat emak gue. Karena gue udah cape disangka tukang tipu. Sore itu, gue duduk di warnet. Headset berdebu nempel. Laptop sekarat menyala. Dan jari-jari gue siap ngebongkar dunia yang katanya tempat menimba ilmu, tapi nyatanya... tempat anak-anak disiksa pelan-pelan.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab5">
+                <h2>BAB 5 : AKSI PAHLAWAN DIGITAL YANG NYATANYA PECUNDANG</h2>
+                <p>Hidup gue di sekolah masih tetap... ya, gitu-gitu aja. Kaki gue masih sering dijegal, nama gue masih sering dilucu-lucuin, dan suara tawa dari belakang kelas tuh udah kayak notifikasi grup WA keluarga, nyebelin, tapi gak bisa di-mute. Tapi ada yang berubah: Gue gak sendiri. Mungkin mereka masih liat gue sebagai anak culun yang jualan majalah dan gambar anime. Tapi di balik layar... gue bukan Rangga si pengecut. Gue adalah helix.2016. Dan perlahan, gue liat perubahan kecil. Ada lagi korbannya..</p>
+                <p>Gue inget banget waktu itu ada anak cewek, namanya Sintya. Pendiem, sering disindir karena punya suara serak dan kulit item. Suatu hari, dia duduk di tangga belakang sekolah, nangis diem-diem sambil megang notes lusuh. Waktu itu dia duduk di tangga belakang sekolah, nangis diem-diem sambil megang notes lusuh. Notes itu penuh gambar, tulisan puisi, dan doa-doa kecil buat jadi kuat. Gue sempet liat isinya pas dia gak sadar: “Ya Allah, kuatkan aku biar gak malu jadi diri sendiri.” Gue diem dulu.</p>
+                <p>Tapi dari balik pojokan, suara ketawa cewek-cewek terdengar kayak kicauan burung. “Eh, lo liat Sintya?” “Serius deh, itu anak suara kayak kakek-kakek sekarat!” “Item banget, bisa pantul sinar matahari ke angkasa!” “Dia tuh kayak... main character film afrika, ngerti gak sih?” Gue tahan napas. Tangan gue langsung nyelipin catatan kecil ke saku. Semua omongan mereka gue tulis. Kata per kata. Intonasi, gestur, ekspresi. Semua.</p>
+                <p>Sorenya, pas Sintya lagi duduk sendiri sambil ngehapus air matanya yang udah mau kering, gue duduk di sebelahnya. Pelan-pelan. "Tia," gue buka suara. "Lo denger yang tadi mereka omongin?" Dia gak jawab. Cuma ngelirik dikit, trus angguk kecil. "Mereka emang sering gitu ke lo?" "...tiap hari, Rang." Suaranya serak, tapi kalimatnya nusuk kayak jarum suntik di hati. Gue diem dulu. Gue gak janji apa-apa ke dia. Gak bilang “gue bela lo” atau “sabar ya.” Karena gue tau, kadang kalimat paling kosong adalah: “Sabar.”</p>
+                <p>Tapi malam itu gue gak bisa tidur. Dan esok harinya? Gue bawa 'senjata'. Besoknya... Gue posting thread. “Pernah gak sih lo dinilai dari suara lo? Padahal lo gak pernah minta dilahirkan kayak gitu. Tapi tenang. Di mata kita, lo manusia yang sama. Bahkan lebih kuat dari mereka yang gak ada tujuan hidup selain ngata-ngatain doang.” Beserta satu screenshot ejekan yang dikirim ke Sintya, lengkap sama identitas pengirimnya. Akun-akun itu langsung nyungsep. Si Sintya mulai berani senyum. Bahkan mulai suka baca thread-thread gue. Dia gak tau itu gue. Dan gue gak butuh dia tau. Yang gue butuh? Liat korban bullying bisa bangkit lagi. Itu udah cukup.</p>
+                <p class="modified">Masuk ke Aksi Kedua. Ada satu anak cowok, namanya Raditya. Dulu sempat ngejekin gue, sekarang dia diem-diem nyamperin gue pas jam kosong. “Bro... lo yang punya akun helix, ya?” Gue senyum dikit, terus jawab, “Nggak lah, gue mah jualan majalah. Yang viral-viral mah bukan gue. Gue palingan viral kalau jatoh di lapangan doang.” Tapi dia maksa. Akhirnya gue bisikin, “Lo mau minta tolong?” Dia ngangguk, dan mulai cerita. Katanya temennya jadi sasaran cyberbullying karena orientasi seksual.</p>
+                <p>Gue dengerin. Gue catat. Dan malamnya... Thread baru tayang. Gue gak nuduh. Gue cuma nyindir. “Lucu ya... orang yang teriak paling keras, biasanya punya histori Google paling gelap.” Itu langsung nge-bust satu akun tukang nyinyir yang ternyata... anak guru. Thread itu nyebar. Dan Raditya? Ngeluarin air mata cowok-cowok tulus waktu bilang: “Bang... lo pahlawan sih.” Gue cuma bales: “Gue bukan pahlawan, bro. Gue tukang nyatet dosa-dosa yang luput dicatat.”</p>
+                <p>Gue masih naruh barcode “Donasi untuk Papua” di tiap thread. Padahal aslinya... buat beli obat emak. Kadang gue malu, tapi lebih malu lagi sama dunia yang bikin anak kayak gue harus muter otak kayak gini cuma biar emak bisa beli antibiotik. Suatu malam, ada adek kelas 8 kirim chat: “Bang, gue suka banget thread lo, gue donasiin 10ribu ya walau kecil.” Gue liat notif QRIS masuk. Rp 10.000. Langsung gue cium layar laptop dan ngetik: “Bless you, anak baik,” gue bisik pelan, sambil nahan air mata.</p>
+                <p>Dan tentang warnet? Itu markas gue. Gue sampe kenal sama Mas Yanto, penjaga warnet yang suka ngupil sembarangan tapi baik banget. Dia sering nyediain gue komputer yang keyboard-nya masih lengkap. Dia bilang, “Nih buat lo, Rangga. Keyboard ini gak ada huruf W-nya, tapi lo kayaknya bisa ngetik ‘woy’ tanpa itu.” Gue ngakak. Padahal di balik tawa itu, gue lagi nyiapin thread buat ngebongkar sistem manipulasi nilai ulangan ordal. Gue sadar satu hal, bro. Akun helix.2016 itu bukan cuma alat perang. Itu jembatan. Antara suara-suara kecil dan kenyataan yang selama ini dibungkam. Dan selama emak gue belum bisa sembuh, selama adik gue masih butuh makan, selama siswa masih dijatohkan cuma karena beda, gue bakal terus nulis. Karena... Selama dunia nyata buta, gue bakal terus nyalain cahaya, dari layar 14 inci, dari kursi warnet, dan dari hati yang gak akan pernah ikutan mati.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab6">
+                <h2>BAB 6 : KERUSUHAN GARA-GARA AKUN ANONIM</h2>
+                <p>Hari itu, gue baru aja keluar dari warung langganan, beli Pop Mie dan pulsa 5 ribuan. Dunia masih kayak biasa: langit mendung, jalan becek, dan anak-anak SMP masih sibuk pura-pura bahagia di story Instagram. Gue duduk di trotoar depan sekolah, sendal satu miring, headset cuma nyolok satu kuping, dan pikiran melayang, bukan karena cinta, tapi karena mikirin hidup yang makin absurd tiap hari. Dari kejauhan, gue liat anak-anak cowok nongkrong, pake seragam dislempangin, rambut belah tengah kayak anak gagal, dan suara mereka... Lantang. Keras. Tapi isi obrolannya? “Bro, geng kita harus punya nama baru. Kayak... ‘Yabeksters’ gitu!” “Eh, kalo ‘KingsSiletz’ keren gak? Soalnya kita suka nyiletin...” “Nyiletin harapan orang tua,” gue potong dalam hati.</p>
+                <p>Gue ngedenger mereka nyusun plan yang katanya rahasia. Tapi anehnya, diceritain keras-keras di tempat umum. Satu anak nyodorin kertas... isinya bukan taktik perang, tapi jadwal ngumpul sambil nyebutin lokasi: “Kali malem Minggu, di pos ronda dekat Indomaret. Jangan lupa bawa samurai mainan, biar nggak ketangkep.” Gue ngusap muka. Lo tau kan rasa pas lo pengen ketawa, tapi juga pengen nempelin batu bata ke jidat seseorang? Ya, itu. Dan pas gue kira dunia gak bisa lebih konyol dari ini...</p>
+                <p>Gue dah gak ngerti apa berita yang bakal dateng lebih gak berguna daripada pemerintah naikin pajak, yaitu… tawuran. Iya, lu gak salah baca. Tawuran. Kegiatan sakral anak-anak sok jantan yang nyebut dirinya "street warrior" padahal skill-nya cuma jago ngumpet pas razia. Bocah-bocah itu kalau lagi beraksi pas tawuran, sumpah, itu bukannya adu nyali, itu lebih mirip flashmob. Goyang maju mundur, sajam-sajaman, kayak lomba cosplay jadi kriminal. Tremor sambil ngerekam lari maju mundur adu br murahan, ini tawuran apa konten horor low budget? Gue sedih, bro, serius. Sedih pas liat orang tua yang harus relain tabungan buat beli tanah kuburan buat si anak, yang dulunya ngotot mau ikut "perang suci" lawan sekolah sebelah. Lah, perang suci kepala lo.</p>
+                <p>Ironisnya, ini tuh susah dihentikan. Katanya sih, “biar musuh makin dikit bro, makin dikit, makin tenar!” Lah itu logika siapa yang ngajarin? Naruto versi darkweb? Dan masalahnya, dampaknya bukan cuma ke mereka doang, warga sekitar jadi korban suara, toko tutup, jalan macet, bahkan ambulans jadi langganan bulanan. Gue nulis ini sambil duduk di lorong kelas yang udah kayak zona perang. Jendela pecah, tembok penuh grafiti "Helix=Anarki", dan satu hal yang bikin gue sadar: manusia bisa pintar, tapi kalau niatnya ngotak-atik kesadaran buat alasan tolol? Ya jadi tolol. Gue selalu percaya, kalau dunia nyata gak ngasih panggung buat kita, tapi buat calon pemerintah yang berani bohong. Dunia maya siap sediain tempat duduk VIP, asal lo berani bersuara.</p>
+                <p>Akun gue, helix.2016, makin meledak kayak gorengan kena air. Thread demi thread gue lepas, ngebongkar semua aib yang selama ini dibungkus rapih sama senyum formalitas dan rapat komite yang isinya cuma diskusi warna sepatu. Ironis, sekolah yang katanya tempat mendidik malah lebih sibuk ngurus rambut lebih dari 3 cm, sepatu putih yang harusnya hitam kinclong, dan dasi yang harusnya sesuai angka kelas. Gue ngerasa kayak villain di film... tapi villain yang dibela sama penonton. Nyatanya gue tetaplah gue, yaitu rangga. Default mode, classic style, tampilan bule, tapi kalau soal isi dompet jangan ditanya!</p>
+                <p>Di balik layar, gue liat anak-anak mulai bangkit. Yang dulunya gak pernah buka suara, sekarang jadi aktivis sekolah dadakan. Poster, spanduk, sampe status WhatsApp nyindir guru, semuanya menyebar kayak voucher gratis. Ada satu status yang ngena banget: “Kalau rambut bisa bikin lo dihukum, berarti logika jembut kita udah dicukur habis.” Gue diem-diem ngakak di balik laptop recehan. Tapi di sisi lain, gue juga nahan emosi. Karena walau akun gue viral, di dunia nyata gue masih Rangga yang dibully, dicibir, dianggap debu.</p>
+                <p>Masuk ke bagian dramanya. Guru-guru panik. Mereka getar-getar kayak HP murah disetel getar maksimal. Mereka tau ada yang gak beres, dan mereka berusaha matiin api... tapi pake bensin. Kehebohan belum selesai. Karena tiba-tiba, guru-guru ngadain rapat darurat. Dan hasilnya: cek HP! Semua murid diwajibkan ngasih HP mereka buat diperiksa. Dalihnya? "Untuk menjaga lingkungan sekolah dari penyebar akun tidak bertanggung jawab." Sontak geger.</p>
+                <p>Sebagian murid protes, terutama yang emang punya privasi yang gak bisa dibuka sembarangan, kayak chat panjang sama gebetan, atau histori nonton drama Korea jam 2 pagi. Tapi... sebagian lain? Mendukung penuh. Terutama mereka yang udah ke-expose duluan. Mereka bilang ini satu-satunya cara menghentikan Helix.2016 yang "meresahkan". Dan... gue tauu. Ini udah masuk tahap serius. Malam itu, Helix.2016 muncul lagi dengan caption garang: “HP adalah benda privat. Isinya bukan cuma foto selfie dan aplikasi pinjam duit. Tapi juga catatan harian, kenangan, dan ruang pribadi. Cek HP tanpa izin itu bukan pembinaan, itu pelanggaran hukum. Kalau tetap dilanjut, bersiaplah... karena saya juga bisa buka HP para guru.” Langsung BOOM.</p>
+                <p>Thread itu viral sampai luar sekolah. Beberapa alumni bahkan komen: “Yessss! Gue dulu juga korban!” Besok paginya? Suasana sekolah kayak mau ada demo besar. Siswa-siswi bisik-bisik, guru-guru tegang, dan yang paling epic... guru BK kelihatan gugup sambil ngeliatin HP-nya kayak ada bom di dalemnya. Dan gue? gue duduk tenang di kursi belakang. Mata gue nyilang ke arah Nazwa yang lagi baca thread baru Helix.2016. Dan dalam hati, gue cuma bisa ngomong: “Tenang, Nazwa... as long as I’m breathing and still punya voucher warnet, gak ada yang bisa nyentuh my honey.”</p>
+                <p>Ketika razia hp dadakan dimulai, semua murid langsung diwajibkan kumpul ke lapangan, tapi gue engga, karena gue yakin kelas gak bakal diawasi sama sekali. Parahnya, mereka sampe bawa polisi, tapi yang dateng kayaknya lebih cocok jadi satpam komplek, bukan penyelidik siber. Siapa yang panik duluan? Murid-murid dong. Ada yang nyumpelin HP ke lubang AC, ada yang masukin ke dalem kancut, dan satu anak nyoba ngirim HP-nya ke rumah lewat ojek online. “Bang, tolong jaga ini kayak jaga perasaan mantan."</p>
+            </section>
+    
+            <section class="story-chapter" id="bab7">
+                <h2>BAB 7 : SANG IA DIANTARA MANUSIA BODOH</h2>
+                <p>Sekolah hari itu gak kayak biasanya. Biasanya ada suara ayam tetangga yang nyasar ke lapangan, sekarang? Diganti sama suara kerumunan demo murid yang bikin genteng sekolah nyaris copot. Slogan-slogan dilontarkan pakai toa murahan, tapi semangatnya? Gak murahan sama sekali! “HP GAK BOLEH DIBUKA SEMBARANGAN!!” “INI SEKOLAH, BUKAN PENJARA DATA!!” Suara itu menggema di antara puluhan murid yang ngamuk, nyalain spanduk dadakan, dan nulis tagar #SavePrivacy di kaca jendela kelas pakai spidol permanen. Sekolah jadi arena protes dadakan, dan guru-guru? Mereka getar. Beneran getar. Sampai-sampai panik nelpon pihak eksternal: Polisi. Tapi ya… sekali lagi... polisi yang dateng bukan kayak di film-film. Lebih mirip satpam minimarket pake pangkat. Mereka berdiri ngebentuk barikade, dengan wajah bingung antara mau meredam atau malah selfie.</p>
+                <p>“Tolong, adik-adik, ini jangan anarkis ya…” Tapi udah telat. Murid-murid udah on fire. Beberapa guru panik, mencoba ngatur kerumunan, tapi suaranya kalah sama yel-yel anak-anak kelas bawah yang udah naik meja sambil jingkrak jingkrik. Di tengah keributan itu… Gue cuma diem. Diam di pojok balkon lantai dua, nunduk tapi mata nyempil dikit ke arah tengah lapangan. Di situ, berdiri satu-satunya orang yang gak ikut rusuh. Nazwa. Cewek yang jadi alasan gue bertahan di sekolah ini. Biasanya dia cerah, rame, senyumnya kayak kasir alfamart sebelah. Tapi sekarang? Dia lesu. Berdiri sendiri di tengah lapangan yang udah kayak pasar malam habis mati lampu. Matanya kosong. Gak ikut demo, gak ikut joget, gak ikut selfie. Seolah pengen semua ini cepet kelar. Seolah... dia bawa beban lebih berat dari sekadar aturan HP, lebih berat dari ributnya bocah-bocah kegenitan yang ngira ini acara TikTok Live. Dan itu bikin dada gue sesek. Sumpah. Rasanya pengen banget turun, jalan pelan ke arahnya, terus peluk Nazwa, bilang “semua bakal baik-baik aja”, tapi ya... Rangga tetaplah Rangga. Cowok yang cuma jadi pahlawan di balik layar, nonton dari balkon kayak cameo di film yang gak ada kreditnya.</p>
+                <p>Dan saat itu... waktu berhenti sebentar. Karena tiba-tiba… “PRRRTT, KREEEKKK, ” Speaker sekolah nyala sendiri. Suara feedback ngeri bikin semua orang diem. Polisi bingung. Guru kaget. Dan murid-murid salfok. Suara siapa ini? “Untuk semua warga sekolah, kalian telah memasuki zona pelanggaran.” “HP siswa-siswi bukan barang rampasan. Kalau kalian menyentuh data pribadi tanpa izin, maka kalian siap kehilangan kehormatan di depan publik.” “Untuk para guru... dan pihak keamanan yang disewa: kalian bukan dewa. Jika kalian merasa berkuasa, ingatlah, bahkan sistem bisa dirombak oleh satu tangan.” Boom. Suaranya aneh. Kayak robot, tapi jelas dan tegas. Text-to-speech AI yang diracik manis sama gue semalam suntuk sambil nahan lapar. “Dan untuk Kepala Sekolah tercinta…”</p>
+                <p>Seketika semua mata melirik ke sang kepala sekolah yang lagi berdiri sok cool di depan lapangan. “Pak Kepala Sekolah, saya titip salam buat status WhatsApp Anda yang nulis 'jadilah pemimpin adil'. Tapi kok kemarin markirin mobil dinas di lapangan upacara buat jemput anak sendiri?” “Malu gak, Pak? Murid-murid antre naik angkot, Bapak kayak Presiden… padahal nyari solusi aja selalu kabur kayak Mulyono." Hening. Kepala sekolah memucat. Anak-anak ketawa nahan ngakak. Guru-guru saling lirikan kayak barusan denger suara Tuhan. Polisi? Nengok kanan kiri, nyari pintu keluar. Dan tanpa sepatah kata, si kepala sekolah buru-buru ngeloyor keluar sekolah. Serius. Kabur beneran. Naik mobilnya tanpa pamit, tanpa bicara. Tinggal jejak ban dan sisa harga dirinya.</p>
+                <p>Kadang gue mikir, sekolah ini bukan tempat buat belajar. Tapi tempat buat main sinetron. Kepala sekolah acting kayak presiden negara kecil, guru BK lebih mirip intel failed mission, dan murid? Ya... entah jadi korban atau pelaku. Gue berdiri di balik pintu lorong lantai dua, ngintip dari kaca kecil. Di bawah, lapangan udah kayak pasar malam. Suara teriakan, spanduk “HP ADALAH PRIVASI!”, “CEK HP = PELANGGARAN HAK ASASI!”, dan “HELIX IS OUR VOICE!” meledak di mana-mana.</p>
+                <p>Gue nyengir. Akhirnya mereka sadar. Suara culun kayak gue bisa berubah jadi bom waktu. Dan saat para polisi bayaran, iya, sekolah sampe sewa aparat kayak mau demo beneran, mulai masuk buat ngebubarin, gue tau waktunya udah deket. Gue tarik napas, buka laptop kesayangan gue. Si benda sakti, si soulmate yang gak pernah ninggalin gue sejak zaman warnet lima ribu sejam. Gue buka satu file yang udah gue siapkan dengan niat suci penuh dosa. Gue ketik perintah “execute sound.mp3”. BRRRRRAAKKK,  Seluruh speaker sekolah mendadak nyala lagi. Suara berat dan dingin langsung keluar kayak suara Tuhan yang lagi marah: “Selamat datang di sistem korup bernama pendidikan. Ketika rambut lebih dari 3cm dianggap ancaman, tapi mental murid yang rusak dianggap drama. Ketika sepatu putih dihukum, tapi guru tidur di kelas dimaafkan. Ketika dasi tidak sesuai kelas dirampas, tapi cctv dengan rekaman maling sepatu dibiarkan. Selamat datang... di kebodohan yang dibuat oleh orang dewasa.”</p>
+                <p>Seketika, semua yang ada di lapangan freezed. Wakil sekolah yang barusan ngumpet di balik pos satpam langsung keluar dengan muka setengah nyawa. Dan lalu... Kalimat terakhir keluar dari speaker, dengan nada yang creepy as hell, pake TTS yang suaranya kayak alien belajar bahasa manusia: “Jika lo gak bisa jadi guru yang ngasih ilmu, mending lo ikhlas diajarin monyet jalan di kebun binatang.” Wakil kepsek panik. Dia nyari mic, nyari kabel, nyari cara matiin sistem. Gue ngeliatin dia dari atas... Ngeliat nenek ptua itu lari muter lapangan kayak ayam abis disiram air panas. Murid-murid teriak, “Tuh, buk! Jangan cuma razia skincare, otak juga direset dong!” Salah satu murid, gue denger dia dari kelas sebelah, teriak sambil angkat bangku: “INI BUAT YANG LUPA KALAU MURID JUGA MANUSIA!” Dan boom. Guru-guru makin panik, muter, lari, hampir kepleset sendiri. Polisi murahan yang disewa sekolah juga ikut panik, ngebentuk barikade tapi... percuma. Udah chaos.</p>
+                <p>Hari itu... lapangan udah kayak arena hunger games. Teriakan, tangisan, amarah, dan... bau keringat anak SMP yang kelamaan demo. Gue berdiri di balkon lantai dua, laptop di tangan kiri, botol air mineral bekas di tangan kanan, yang sialnya, isinya bukan air mineral, tapi air keran dari lab biologi (biasa, anggaran sekolah dialihin buat ngurus dekorasi rapat bahas hal receh). Gue lihat ke bawah. Semua chaos. Polisi coba nenangin anak-anak, guru-guru masih sok nyari siapa dalang di balik suara misterius tadi, beberapa murid ada yang ngevlog buat konten, “Sekolahku Rusuh, Kepsek Lari,” entah buat nyari adsense atau nyari validasi. Tapi di tengah kerumunan itu… Ada lo. Nazwa. Cewek yang bikin gue pengen ngelawan dunia, cuma biar lo bisa senyum tanpa pura-pura. Lo berdiri di tengah lapangan. Gak ikut demo. Gak angkat suara. Gak ikut sorak-sorai. Lo cuma… diem. Dan diem lo itu... lebih kenceng dari speaker yang tadi gue retas.</p>
+                <p>Mata lo kosong. Tangan lo gemetar. Gue tau lo takut. Tapi gue juga tau... lo bukan penakut. Gue nunduk. Nyokap gue pasti marah liat gue mainin dunia kayak ini. Tapi ini satu-satunya cara gue ngebalas semuanya. Buat lo. Buat adek gue dan nyokap gue. Buat semua korban yang dibungkam sistem. Pas polisi mulai bubarin demo, beberapa murid lari keluar pagar. Ada yang lompat, ada yang pura-pura pingsan biar dibopong keluar, ada juga yang… selfie. Gue gak ngerti ini sekolah atau TikTok Fest. Tiba-tiba... Laptop gue ngelag. Cursor-nya stuck, layar putih, dan kipasnya bunyi kayak jet tempur mau take-off. Di tengah rusuhnya sekolah yang sekarang udah viral di berita CNN (judulnya: “SMP Yabeka Chaos, Akun Misterius Retas Sekolah”), gue cuma bisa nepuk-nepuk casing laptop yang udah lecet kayak muka habis kena puber.</p>
+                <p>Lalu... “pling.” Notifikasi masuk. Satu DM dari akun yang gak gue kenal. Profilnya kosong, username random. Tapi isi pesannya... “Helix, siapa lo sebenernya? Gue pengen bantu. Lo keren. Lo pahlawan.” Gue senyum. Lucu. Pahlawan, katanya. Padahal, yang mereka anggap pahlawan ini… Masih nyicil kuota, nebeng WiFi mesjid, dan baru kemarin salah klik karena panik nyari "cara buat Scratch" tapi malah buka CNN Media. Gue masukin laptop ke tas. Langkah gue pelan, turun tangga, ngelewatin ruang guru yang sekarang sunyi kayak kuburan. Mereka semua di lapangan, lagi pura-pura beresin kerusuhan. Besoknya? Beraksi lagi, jadi aktor di panggung sistem yang gak pernah adil.</p>
+                <p>Langkah gue nyeret sendal. Mata gue masih sempat ngelirik langit sore yang mendung, kayak hati gue: abu-abu. Tapi saat itu juga, pikiran gue balik ke satu hal yang bikin dada anget, kayak minum susu anget di tengah badai. Nazwa. Cewek yang gak pernah gue sapa, tapi selalu ada di layer otak gue tiap malam. Bukan karena dia cantik doang, tapi karena dia... juga luka. Sama kayak gue. Dan luka-luka itu kayak nyambung secara gak langsung. Kayak dua orang asing yang saling ngerti tanpa perlu ngobrol. Cinta, bro. Kadang gak butuh status, gak perlu pegangan tangan di koridor sekolah, atau ngasih cokelat tiap Valentine. Kadang cinta itu... sekomitmen menjaga seseorang dari balik layar, kayak antivirus premium yang gak minta bayaran. Itulah gue. Si cowok culun yang kalau ketawa suka kecepirit batuk. Tapi di balik wajah polos dan aroma tinta majalah yang nempel terus di baju gue... tersimpan rage mode yang bisa ngerontokin keangkuhan manusia tolol.</p>
+                <p>Sampai suatu hari, gue ngeliat hal paling bikin darah naik ke ubun-ubun: DM jorok ke Nazwa. Dikirim sama cowok songong dari kelas sebelah, pakai kata-kata sok gentleman tapi kelakuannya mental kelas pasar. Gak pakai lama, Gue langsung nyalain laptop ,  si sakti mandraguna ,  dan mulai nyusup ke server murahan tempat si cowok itu sering nge-backup file. Dan... boom. Dapet. Nama lengkap, alamat rumah, history search, bahkan game bajakan yang dia pake username “r4j4n4k4l69.” Besoknya, satu sekolah geger. Helix.2016 kembali turun tangan. Thread-nya tajem, elegan, dan pedas: “Lo boleh jadi cowok yang pede, tapi kalau udah ganggu cewek dengan niat menjijikkan, siap-siap nama lo nyangkut di tiap dinding gosip. This is not just for Nazwa. Ini buat semua cewek yang pernah dapet gangguan dari cowok ngaku jantan tapi pikirannya mirip modem jadul, lemot dan suka nonton bokep melulu.” Nama si pelaku? Di-expose. Fotonya? Satu sekolah nyebar. Bahkan guru agama sampai geleng-geleng kepala karena isi DM-nya lebih pedes daripada sambel level 100.</p>
+                <p>Dan Gue? Masih duduk di bangku belakang. Masih dianggap bocah culun. Masih disuruh fotokopi LKS kalau pas pelajaran MTK. Tapi Helix.2016? Makin dipuja. Bahkan akun gosip luar sekolah mulai ngeliput. Ada yang nyebut dia guardian hacker, ada juga yang bilang dia revenge angel in hoodie. Padahal hoodie Rangga ya cuman satu, bolong di siku, dan udah mulai bau apek. Beh merasa keren bet gue.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab8">
+                <h2>BAB 8 : KEBENARAN GAK BUTUH DASI</h2>
+                <p>Besoknya, sekolah sepi. Tapi bukan sepi yang adem. Ini sepi yang kayak... abis kiamat. Bangkunya masih ada, guru-gurunya masih ngopi, tapi auranya udah beda. Kayak semua orang nyadar: ternyata selama ini mereka hidup dalam kebohongan sistem yang lebih peduli panjang rambut daripada isi kepala. Gue masuk lewat gerbang, satpam cuma ngeliatin, mungkin trauma abis liat kepsek kabur kayak aktor sinetron yang kena amnesia. Gue jalan pelan, nyaru, tetap pake wajah culun yang gak bisa bedain Excel sama Word ,  walau semalem baru aja gue retas CCTV dan nyebar rekaman rapat guru ke internet.</p>
+                <p>Judul file-nya? “Rapat Tapi Gak Merapat.mp4.” Dan bukan cuma itu ,  Video rekaman rapat guru juga gue selipin bonus: Bu Yuni ngomel karena air dispenser kosong, sambil nyebut, “Makanya saya males ngajar kelas 8G, auranya tuh negatif!” Pak Togar yang ngupil dengan penuh dedikasi sambil ngomong, “Anak zaman sekarang butuh disiplin, bukan diskusi.” Dan satu lagi, paling absurd: Animasi "Jangan Membully Teman" diputer di ruang guru, tapi ada watermark gede di pojok kanan bawah: "Made with AI-Free Demo Version". Kayak... bro, masa niat ngajarin moral tapi nyolong software? Komentar netizen langsung barbar: "Setidaknya bully-nya jangan ke viewer, lah." Gue upload pake akun anonim, judulnya: "Mereka Bilang Kita Bodoh, Tapi Mereka Lupa Matiin Mic-nya." Langsung trending. Viral. Dapet reaksi lebih banyak dari pengumuman UN dibatalin.</p>
+                <p>Andai lo tau setelah gue post ini, tetep aja. Tetep rangga. Anak yang kotak donasinya pernah dicoret "Jual beli musang". Anak yang bilang ke ibunya “Bu, sabar ya, nanti Rangga gede jadi orang.” Padahal tiap malam gue cuma nyari sinyal Wi-Fi gratisan buat nyebarin fakta bahwa guru-guru pernah ngatain muridnya “lebay” karena nangis dibully. Selanjutnya... Hari itu, entah kenapa gue ngelihat sesuatu yang beda. Bukan langit, bukan Nazwa, bukan polisi yang masih parkir di depan sekolah, tapi tatapan murid-murid yang dulu ngeledekin gue. Sekarang… waspada. Kayak mereka mulai mikir: jangan-jangan si Rangga ini... Tapi belum sempat mereka mikir lebih jauh, gue liat Nazwa duduk di bangku paling ujung, sendiri. Dia keliatan kayak orang yang udah tau banyak, tapi pura-pura gak ngerti demi gak makin ribet.</p>
+                <p>Gue duduk dua bangku di belakangnya. Gak ngomong apa-apa. Cuma liat laptop gue, buka folder “RVF-CODE70113" ,  isinya dokumentasi kelakuan guru, pembully, dan rencana-rencana selanjutnya. Lalu sebuah suara masuk ke speaker kelas. “Selamat pagi, warga SMP Yabeka. Hari ini kita belajar tentang logika. Coba jawab: kenapa sebagian besar guru otaknya lebih miring daripada dasi yang mereka pakai?” (dengan nada family). Semua terdiam. Gue ngetik sambil nyeruput susu kotak sisa tadi pagi. Polisi sewaan langsung ngecek ruang IT. Tapi speaker itu disambung dari toilet lantai dasar. Maaf, Pak. Helix.2016 emang jago multitasking.</p>
+                <p>Dan hari itu, satu per satu mulai terbongkar. Akun alter anak guru yang ternyata suka ngata-ngatain murid di Twitter. Catatan pembayaran fiktif untuk “pengadaan seragam wajib.” Sampai rekaman suara guru yang bilang, “Yang penting rambut rapih, soal pelajaran mah tergantung nasib.” Semua diunggah. Tapi bukan buat ngejatohin. Ini… edukasi. Karena di dunia gue, kebenaran gak butuh dasi. Kebenaran gak harus pake sepatu hitam yang mengkilat kayak motor baru. Dan kebenaran… kadang cuma butuh laptop butut, koneksi lemot, dan hati yang udah terlalu sering diremehkan. Gue gak butuh standing applause. Gue cuma butuh mereka buka mata. Termasuk lo, Nazwa.</p>
+                <p>Dan saat hari makin siang, dan sekolah makin panas, satu notif masuk: “Helix.2016, lo bisa ubah dunia, dunia tunduk kepada elo. Siapa lo sebenarnya? Jawab aja gak bakal disebar gini.” Gue bales: “Gue gak ubah dunia. Gue cuma nyari keadilan… karena gak semua orang punya privilege buat nangis di pangkuan nyokap sambil bilang ‘aku cape.’”</p>
+            </section>
+            
+            <section class="story-chapter" id="bab9">
+                <h2>BAB 9 : DUNIA TELAH DIAM, TAPI HINAAN TERUS HIDUP</h2>
+                <p>Beberapa minggu setelah kerusuhan besar itu, sekolah mulai adem. Tapi adem itu bukan berarti damai… cuma tanda bahwa luka udah jadi koreng, dan siap dibuka lagi kapan aja. Gue masih Rangga. Masih culun, masih gondrong dikit langsung dipanggil “anak komunis” sama guru. Gue cuma bisa senyum sambil nunduk, padahal pengen banget ngomel balik. Tapi buat apa? Mereka udah nempel label ke gue: "anak komunis", "pengacau sistem", "otak retak". Ironisnya? Gue ini sebenernya ganteng, yes sir. Bule look, hidung mancung, mata coklat terang. Tapi sayang, dompet gue kayak gurun Sahara, kering kerontang. Jadi ya wajar lah, mereka kasih julukan ke gue: "ganteng-ganteng miskin." Katanya tampang luar negeri, isi kantong lokal. Wkwk, dingin bro, dingin...</p>
+                <p>“Rangga si pendekar warnet. Jurus andalannya: buka DM lalu kabur.” “Kalo Rangga jadi hacker, kenapa dia gak bisa hack otaknya yang lemot?" “Komoknya kayak VGA low-end, tapi kelakuan pengen kayak Intel Core i9.” Gue cuma bisa scroll dan ketawa miris.Lucu sih… Lucu karena mereka gak sadar, orang yang mereka bully tiap hari itu adalah alasan kenapa mereka sekarang bisa selfie di sekolah tanpa takut di-backstab temennya.</p>
+                <p>Helix.2016 masih aktif. Masih posting, masih ngebantu korban-korban bully lain, bahkan sempet ngebongkar kasus cowok yang suka nyolong celana olahraga di ruang ganti. (Plot twist: ternyata guru olahraga.) Tapi gue? Gue gak nyelamatin diri sendiri. Kalo hidup ini game, mungkin Rangga tuh NPC. Yang jalan dari lorong ke lorong cuma buat dapet quote jahat dari player: “Eh rangga, baju lo numpuk di leher. Belum jadi manusia?” “Gue yakin kalo lo ilang, sekolah jadi wangi.”</p>
+                <p>Sialnya, gue gak bisa pencet tombol escape. Kadang gue ngaca, terus senyum dikit. Gue tanya ke pantulan gue sendiri: “Lu sadar gak sih, dunia gak akan pernah peduli bahkan kalau lu bener sekalipun?” Pantulan gue diem. Tapi suara dari kelas sebelah udah cukup jadi jawaban: “Woy rangga, buka baju dong biar bisa dijadiin spanduk!” Out of nowhere, ada anak ngirim stiker wajah gue yang lagi ngantuk. Mereka edit pake aplikasi jahat, kasih keterangan “Ketika kerja keras gak sesuai ekspektasi.” Gue scroll grup lain, ada satu thread: “Ranking bully berdasarkan ekspresi nangis korban. Rangga ada di peringkat paling lucu.” Gue ketawa kecil. Humor mereka tuh jahat… tapi kreatif. Gue akui, sekolah ini ngasih ruang buat satu hal: berkreasi dalam menjatohkan orang lain.</p>
+                <p>Yang bikin nyesek… bukan cuma gue yang digituin. Ada Dini ,  cewek kalem yang pernah ngasih snack ke guru tapi dibales: “Udah kamu ambil aja sendiri, saya puasa.” Ada Fadli ,  anak penghayal yang pernah bilang pengen jadi astronot, sekarang tiap hari dibilang “manusia khayalan”. Dan ada Aldi ,  yang pernah pipis di celana pas kelas 5, dan rekamannya masih disebar kayak video legendaris. Helix kadang bantu mereka. Kadang doang. Gak semua bisa diselametin. Karena kadang… korbannya sendiri udah ngerasa dirinya layak buat dihina. Gue pernah bilang ke Fadli, “Bro, sabar ya. Kita bisa bangkit bareng.” Dia jawab, “Bangkit? Gue aja tidur di kelas udah dikira bangke. Apalagi bangkit.” Gue cuma diem, terus kasih dia sisa roti sobek yang gue dapet dari nyokap pagi tadi. Lucunya… itu roti lebih hangat dari semua sapaan guru hari itu.</p>
+                <p>Dan Nazwa? Ah. Gue bilang gak mau nyebut dia dulu. Tapi jujur… ngeliat dia makin diem, makin menarik diri, dan makin keliatan malu kalo ketemu mata gue… itu lebih nyakitin dari semua hinaan yang pernah gue dapet. Mungkin dia malu pernah deket sama "si Komok", atau mungkin… dia sadar, Rangga itu cuma pahlawan buat orang lain. Bukan buat dirinya. Apalagi buat dia.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab10">
+                <h2>BAB 10 : DUNIA PENUH FITNAH</h2>
+                <p>Gue pikir... gue udah bisa atur semuanya. Tapi ternyata enggak, men. Gue bukan dewa, cuma anak SMP yang ke warnet pun harus nyisihin uang jajanan dari jualan majalah. Kadang gue pikir, "When I still have voucher warnet," gue bisa ngerubah dunia. Tapi sekarang? Dunia malah muter balik, ngehajar gue dari belakang. Nazwa... Dia nggak ngomong apa-apa ke gue, tapi mukanya udah kayak langit mau hujan badai. Semua orang ngelihatin dia seolah dia dalang. Karena tiap kali ada kasus DM cabul atau ancaman yang tiba-tiba disebar sama Helix, dia... selalu terlibat. Padahal dia diem aja. Korban.</p>
+                <p>Dan pelakunya? Gue yang spill. Nama-nama cowok sampah yang doyan ganggu cewek, yang iseng kirim emoji terong jam 2 pagi, semua gue umbar ke publik. Tapi orang-orang malah narik kesimpulan: "Nazwa pasti dalangnya." "Bocor mulu datanya kalau ada dia." "Jangan deket-deket dia, bisa-bisa histori bokep lu kesebar." Sumpah ya, kadang netizen sekolah tuh lebih jahat dari iblis... Gue pengen bilang ke dia, "Gue nggak bermaksud nusuk lu dari belakang, Naz." Tapi dia udah jalan duluan. Matanya... kosong. Kayak ada kalimat yang dia tahan, tapi lidahnya kelilit luka. Dia enggak percaya sama siapa pun lagi, bahkan sama gue. Ironis, ya? Orang yang jaga dia dari jauh malah jadi orang yang bikin hatinya robek.</p>
+                <p>Padahal, kalau mereka tau... gue ini bukan siapa-siapa. Cuma Rangga, julukannya Ganteng-Ganteng Miskin, versi indie dari drama Korea. Dan karena semua makin parah, akhirnya gue nulis satu thread terakhir. Satu yang paling berat. “Helix bukan Nazwa. Bukan juga siapa-siapa yang kalian kira.” Gue selipin kode. Rumit. Gabungan dari timestamp, potongan meme, dan logo majalah gue yang pernah viral bentar di grup OSIS. Clue-nya kecil. Tapi cukup buat orang pintar ngerti: Helix itu... bisa jadi siapa pun. Tapi kalau kamu teliti... Kamu akan tau, itu gue.</p>
+                <p>Tapi sialnya, clue itu bukan cuma menyadarkan orang. Itu juga nyayat Nazwa. Karena sejak saat itu, dia nggak pernah bales chat gue lagi. Mukanya makin dingin. Mungkin... dia udah sadar, gue lah yang bikin semua ini. Gue bukan nyelamatin dia. Gue... yang ngasih dia pisau, buat ditusuk dari belakang. Tapi yang paling nyakitin? Gue juga korban. Dan kayak biasa... korban nggak pernah kedengeran suaranya, ibarat rakyat miskin demo didepan pemerintah yang kesumpel telinganya.</p>
+                <p>Jujur, setiap hari gue bangun, rasanya bukan kaya anak sekolah... tapi kaya hacker gagal yang punya utang moral satu semesta. Gue pikir setelah gue spill fakta ke publik, semua bakal clear. Gue pikir kebenaran bakal ngangkat Nazwa naik lagi ke singgasana ex ketua OSIS yang dihormati. Tapi... gue lupa satu hal: Netizen sekolah itu gak butuh kebenaran. Mereka cuma butuh tontonan. Dan Nazwa? Jadi tontonan paling laris satu SMP.</p>
+                <p>Setiap jam istirahat, dia jadi target. Bukan cuma omongan tajam, tapi aksi nyata. Suatu hari, gue liat sendiri, seorang cewek dari kelas sebelah, yang dulunya temennya sendiri, nyamperin dia dan... plak! Tamparan itu keras, bro. Saking kerasnya, jangankan wajah Nazwa, hati gue juga ikut kebakar. “Lo puas, Naz? Lo pikir lo jago main belakang?!” Anjir, itu bukan cuma tamparan. Itu fitnah + gaslighting + emosi insecure campur jadi satu.</p>
+                <p>Gue berdiri, mau maju, tapi... Nazwa malah diem. Dia gak nangis, gak ngomong, gak marah. Dia cuma... nunduk.... Dan yang cowok juga gak kalah nyebelin. Dari yang nyapa dengan, “Eh, Helix junior,” sampai yang ngajak taruhan: “Berani gak lo ngomong di depan CCTV kalo lo gak bocorin data?” “Buktikan dong Naz, kalo lo bukan centang dua yang suka nge-spill!” Astaga. Gue pengen reply pake sandal swallow ke jidat mereka. Tapi gue tau... gue turun tangan sekarang? Sama aja makin nyeret dia ke jurang lebih dalam.</p>
+                <p>Nazwa makin dikucilkan. Bahkan guru-guru mulai pake tatapan kayak liat anak hasil percobaan gagal. Dulu dia ketua OSIS. Sekarang? Dia lebih mirip iklan animasi AI yang gagal total. Dan gue? Gue cuma Rangga. Yang ngeliat dari jauh sambil mikir keras kayak soal PKN UTS: gimana caranya ngebersihin nama dia... tanpa bikin dia makin tenggelam? Gue nulis thread, hapus lagi. Gue bikin kode baru, tapi takut... malah makin memperkeruh suasana. Gue cari cara, gue kepikiran buat hubungin wartawan. Tapi yang ada malah berita “Remaja Tak Dikenal Kirim Surat Terbuka ke CNN: Save My Crush.”</p>
+                <p>Gue pusing. Pusing bukan karena gak bisa bantu... tapi karena tiap kali gue gerak, dia yang kena. Kadang gue liat dia duduk sendiri di pojokan. Tangannya gemeter, tapi dia pura-pura sibuk nulis. Gue tau dia nyoba tegar. Tapi... tulisan di bukunya kebaca: "Apa sih salah gue sebenernya???" Dan saat itu juga, gue merasa... Gue bukan pahlawan. Gue cuma... dalang yang ngacauin panggung orang yang gue sayang.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab11">
+                <h2>BAB 11 : ISTIRAHAT DARI TENARNYA INTERNET</h2>
+                <p>Gue pernah denger orang bijak bilang, “Kadang suara yang paling keras, berasal dari orang yang paling diem.” Tapi kayaknya, hari ini suara paling keras datang dari… gue yang mutusin buat diem. Gue duduk di depan warung kopi deket sekolah, tempat biasa orang-orang ngerumpi, ngegosipin siapa yang viral hari ini dan siapa yang bakal jadi bahan meme besok. HP gue di tangan, akun helix.2016 masih kebuka. Jari-jari gue udah siap ngetik satu thread terakhir, semacam surat pamit ala pejuang virtual. "Pelaku sudah ketauan. Dia adalah sosok pria yang sangat diremehkan." Setelah itu, boom. Helix… hilang. Tanpa pamit, tanpa kode, tanpa thread panjang-panjang kayak biasanya. Gue cabut semua jejak digital gue. Seolah Helix udah pensiun kayak Power Ranger yang abis tamat episodenya.</p>
+                <p>Tapi jujur, bro. Ini bukan soal takut. Ini soal… cape. Gue nggak tau kabar Nazwa makin parah atau membaik. Yang gue tau, dia udah nggak dateng sekolah. Nama dia masih jadi gunjingan, meme-nya masih wara-wiri. Tapi Nazwa? Hening. Dan untuk pertama kalinya, gue… milih buat nggak ngelakuin apa-apa dulu. Gue balik nganterin majalah. Yang suka beli masih itu-itu juga: tukang rongsokan, ibu-ibu warung, sama satu penjaga warnet yang selalu nyangka majalah gue tuh edisi dewasa karena covernya terlalu kreatif. Gue juga nyisihin duit dari jualan. Bukan buat beli voucher warnet kayak dulu, eh, walau godaannya gede juga sih, soalnya... "When I still have voucher warnet, I feel like a god." Tapi sekarang, duit itu gue tabung buat satu hal: beliin Nazwa kado dan surat penyemangat. Tapi ya, bukan dari Helix. Dari Rangga. Dari gue yang katanya “ganteng-ganteng miskin,” yang dulu dibilang anak komunis karena jualan, dan sekarang... tetep ganteng, tapi masih miskin.</p>
+                <p>Gue juga sempetin waktu jagain adek gue yang makin cerewet, dan temenin nyokap gue yang udah lemes tiap harinya. Gue belajar satu hal penting: kadang, hero itu gak butuh cape, gak butuh keyboard, gak butuh thread viral. Kadang hero itu ya… yang gak nyerah, meski semuanya keliatan hancur. Dan kalo lo tanya apa gue bakal balik jadi Helix? Gue gak janji. Udah hampir tiga minggu Nazwa gak keliatan di sekolah. Nggak ada kabar, nggak ada status, bahkan story Instagram-nya pun kosong kayak saldo rekening gue pas awal bulan. Gue mulai panik. Tapi panik versi Rangga tuh gak teriak-teriak, gak spam DM, apalagi drama kayak sinetron. Panik versi gue? Naik sepeda. Iyap. Sepeda tua, rantainya berisik kayak ibu kos lagi ngamuk, dan satu pedalnya udah miring. Tapi ya itu doang kendaraan perang gue.</p>
+                <p>Gue kayuh pelan-pelan tiap sore, muterin komplek mewah yang kayaknya dibangun pake logam anti-rakyat: pagar tinggi, gerbang otomatis, satpam galak, dan rumah yang kayak dilapisi titanium asli. Dan tiap kali gue lewat depan rumah Nazwa, sepeda lusuh gue berasa kayak joke hidup yang lewat. Kalo rumah dia itu istana kerajaan, maka gue ini... tukang nyengir yang tersesat dari abad ke-18. Tapi tetap, gak ada tanda kehidupan. Rumah itu sunyi. Bahkan suara air mancur hiasan di halamannya pun kayak diem demi menghargai sunyinya perasaan gue. Hari-hari terus berlalu, dan keinginan buat balik jadi helix.2016 makin menggebu. Nafsu buat ngebongkar, ngacak-ngacak sistem, ngelindungin Nazwa dari balik layar… makin kuat. Tapi gue lawan. Gue udah janji sama diri sendiri, ini bukan soal viral, bukan soal balas dendam, ini soal waktu. Dan sekarang? Waktunya belum.</p>
+                <p>Sampai suatu malam... gue mimpi. Bukan mimpi dikejar tuyul, bukan juga mimpi jadi superhero. Tapi mimpi yang absurd... hangat... dan aneh. Gue ada di kelas SD. Duduk di bangku kecil, meja kayu yang udah banyak coretan “TUNGTUNGPANTEK” sama gambar-gambar love gak jelas. Dan di sebelah gue, Nazwa. Dia ngajar gue rumus matematika, dan yang lebih absurd lagi... gue ngerti. Gue inget banget. Dia senyum sambil nulis di buku, “Kalau x + 3 = 10, maka x itu berapa?” Gue yang di dunia nyata gak pernah paham aljabar, malah bisa jawab dengan senyum, “Tujuh, Nazwa.” Aneh ya? Tapi hangat. Kayak ada matahari kecil yang nyala dalam dada. Musik latarnya pun (entah kenapa) kayak lagu Happier, yang bikin momen itu makin mellow tapi manis. Kelas itu cerah, jendela terbuka, angin masuk pelan, dan... untuk sesaat, dunia ini indah banget.</p>
+                <p>Pas gue bangun, gue diem lama. Liat langit-langit kamar, mikir: “Apa ini tanda? Atau cuma efek kebanyakan makan mie malem-malem?” Tapi satu hal yang gue yakin: perasaan gue ke dia tuh lebih dari sekadar rasa suka. Ini bukan drama remaja. Ini sesuatu yang nyelip dalam tulang, nempel kayak ingus kering di lubang hidung. Mau gue buang, susah. Mau gue biarin, ngganggu. Tapi di situ terus. Nempel. Jadi untuk sekarang, gue gak bakal jadi Helix lagi dulu. Tapi... hati gue? Masih di situ, nyimpen satu tempat buat Nazwa. Dan kalau dunia ini terus nyakitin dia, gue... mungkin bakal nyakitin dunia balik. Tapi pelan-pelan. Elegan. Gak norak. Gak grusa-grusu. Seperti biasa, pake senyum culun… dari cowok yang katanya ganteng-ganteng miskin.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab12">
+                <h2>BAB 12 : KEJADIAN YANG SEHARUSNYA TIDAK TERJADI</h2>
+                <p>Pagi itu langit pucat, kayak wajah murid yang lupa bawa PR pas jam pertama. Gue nganter adek cewek gue ke SD, seperti biasa. Jalanan masih basah sisa hujan tadi malam, dan roda sepeda gue, yang udah kayak veteran perang itu, ngesot dikit tiap kena aspal miring. Tapi bukan itu yang bikin hati gue berat. Entah kenapa, pagi itu perasaan gue gak enak. Bukan karena ngantuk, bukan juga karena perut kosong. Tapi kayak... firasat buruk yang ngegantung kayak kabel listrik di kampung. Gue sengaja lewat depan rumah Nazwa. Rumahnya megah, dingin, sombong. Dindingnya dilapisin marmer kayak muka orang yang banyak skincare tapi hatinya keras. Adek gue, setelah gue antar, cium tangan dengan mata berbinar kayak biasa. Cewek-cewek SD lainnya pun liat gue dengan tatapan "bang, abang jual majalah juga gak sih buat kita?" Tapi gue cuma nyengir kecil.</p>
+                <p>Pas diepan sekolah adek gue, abis nganterin dia. Pakai sepeda tua yang bannya suka bunyi “nyiiiiiit” tiap belok, kayak soundtrack film horor low budget. SD-nya rame, warna-warni, anak-anak lari-larian kayak hidupnya belum pernah ditampar realita. Adek gue cium tangan, matanya berbinar, penuh harapan, kayak abis disuntik motivasi dari TikTok. Beberapa cewek-cewek SD lainnya liatin gue lama. Ada yang bisik-bisik, ada yang cekikikan, bahkan ada yang ngeluarin catatan kecil, mungkin mau nyatet nama gue buat jadi calon suami masa depan versi anak kelas 5. (im not pedo). Tapi ekspresi mereka berubah pas liat sepeda gue. “Kok bang Rangga naiknya sepeda karatan sih?” Yang satu lagi nyeletuk, “tapi mukanya kayak pemain sinetron, ya…” Fix. Mereka kebingungan antara naksir atau ngajak donasi. Gue cuma senyum simpul. Dalam hati, gue ngomong: “Senyumin aja dek. Abang emang limited edition: ganteng, tapi edisi lama.” Tangan gue masih bau tinta dari majalah yang tadi gue jualin. Saku kiri gue cuma berisi recehan dan mimpi. Tapi entah kenapa, di tengah semua itu... gue merasa keren. Keren karena masih bisa bikin adek gue senyum.</p>
+                <p>"Untung si bocil itu gak tau kalo gue miskin. Ganteng-ganteng miskin, bro. Full package of a heartbreak."</p>
+                <p>Balik lagi gue ke jalan rumah Nazwa, rencana awalnya sih mau pulang dan makan nasi goreng sisa semalam, tapi tiba-tiba... kerumunan warga. Gue ngerem mendadak. Sepeda gue hampir nyium pantat mobil pick-up sayur. Gue turun, nyari tau. Salah satu ibu-ibu pake daster bolong di bawah bilang, "Katanya anak dari keluarga itu tiba-tiba gila. Bunuh keluarganya. Yang selamet cuma mamanya doang, bapaknya kerja katanya, naik mobil mahal itu tuh, Mercy G-Class."</p>
+                <p>Dunia gue langsung berhenti. Suara-suara lenyap, diganti suara jantung gue yang berdetak kayak drum metal. Gue dorong orang-orang, gak peduli gue disuruh minggir. Rumah itu terbuka. Gue naik. Lantai dua. Bau darah, dan besi. Langkah gue pelan, tangan gue gemetar. Ada satu tubuh... kaku... mungkin kakaknya Nazwa. Tapi mata gue langsung tertuju ke sosok cewek... duduk di pojokan kamar, tangan kanan megang pistol, mata sembab, wajahnya udah bukan Nazwa yang dulu.</p>
+                <p>"Nazwa... tolong jangan," suara gue lirih, pecah. Kayak botol sirup jatoh dari rak warung. Dia ngeliat gue. Sekilas. Hanya sekilas. Lalu... DORR. Suara yang selama ini gue hindari. Suara itu... kembali. Dentuman itu lebih sakit daripada pukulan mana pun. Gue jatoh terduduk, badan gue lemes. Tapi gak berhenti di situ... pistol itu dilempar ke arah gue. Seolah... gue yang nembak. Darah Nazwa muncrat, netes ke sepatu lusuh gue. Tangan gue gemetar. Gue gak bisa berdiri. Gue gak bisa kabur. Yang bisa gue rasain cuman... sakit. Sakit karena gue tau... ini bukan sekedar darah di lantai. Ini luka yang ngebekas selamanya. Dan trauma gue... suara tembakan itu, bikin otak gue ngulang semua kenangan buruk, kayak DVD bajakan yang diputer terus-terusan. Gue mulai ngegigil. Suara teriak warga makin dekat. Tapi suara dalam kepala gue lebih keras. "Lo gagal, Rangga." "Lo dateng terlalu telat." "Lo... penyebab semuanya." Dan untuk pertama kalinya, gue gak bisa ngerespon pake lelucon. Karena ini bukan tentang lucu lagi. Ini tentang... hidup yang ngerasa udah kalah jauh sebelum peluit babak pertama dibunyiin.</p>
+                <p>Lantai itu dingin. Tapi dingin lantai marmer rumah Nazwa nggak sebanding sama dingin di dalam dada gue. Gue tersungkur. Di sebelah gue, tubuh Nazwa... nggak bergerak. Pistol masih jatoh di dekat tangan gue. Darahnya... nyentuh ujung jari gue. Gue diem. Badan gue gak bisa digerakin. Mata gue kosong, kaya kaca depan warung pas hujan deras, berembun, burem, dan dingin. Tiba-tiba... WEEE-WOOO, WEEE-WOOO. Sirine polisi meletus kayak soundtrack film yang salah genre, ini bukan film aksi, bro. Ini film siksaan mental. Warga yang dari tadi udah kayak cacing kepanasan di luar, mulai ambruk masuk ke rumah. Teriakan. Isakan. Kaki-kaki lari-lari. Dan di antara mereka semua... Ayahnya Nazwa. Tinggi. Dingin. Dasi masih lepas satu, tangan masih megang HP, dan ekspresinya? Kayak bumi baru berhenti berputar. Tatapan dia ke gue, seolah-olah gue ini bukan manusia. Lebih hina dari pejabat, lebih busuk dari koruptor yang ketauan nangis minta maaf.</p>
+                <p>Semua orang diem. Hening. Tapi enggak buat lama. Tangan-tangan mulai narik gue. Salah satu warga, bapak-bapak botak pake singlet putih yang udah jadi abu-abu, nyekek gue duluan, katanya, "INI ANAK YANG NEMBAK, SAYA LIAT PISAUNYA!, EH SALAH, SENJATANYA!" Gue gak bisa ngomong. Gak bisa ngejelasin. Gak bisa mikir. Yang bisa gue lakuin cuma kejang, literally. Badan gue refleks berontak. Mental gue copot. Gue teriak. Tapi suara gue kalah sama suara tuduhan orang-orang. Sorakan mereka kayak gergaji yang motong leher gue pelan-pelan. "PEMBUNUH!" "NAJIS, GANTENG-GANTENG PSIKOPAT!" "ITULAH, JUALAN MAJALAH CUMA KEDOK!"</p>
+                <p>Padahal yang gue jual majalah beneran. Tapi buat mereka, gue ini monster. Mata ayah Nazwa masih nancep ke gue. Dia gak nangis. Dia gak marah. Tapi ekspresinya jauh lebih mengerikan: diam, tapi penuh niat. Gue tau dia pejabat. Nama dia sering masuk berita pas bansos. Orangnya dikenal bersih, baik, terhormat. Dan sekarang... anaknya mati. Di depan seorang bocah miskin, kumal, yang kebetulan ganteng tapi sialan banget nasibnya. Gue dimasukin ke mobil polisi kayak karung beras. Masih kejang. Masih gemeteran. Gue ngeliat kaca belakang. Rumah Nazwa makin jauh. Tapi gue tau... Hidup gue baru aja patah.</p>
+                <p>Siang itu... matahari kayak gak punya empati. Sinar panasnya nyetrum kulit gue yang udah lemes. Gue duduk di pojokan mobil polisi, tangan diborgol, napas pendek-pendek, sementara dunia di luar kaca mobil jadi film horor yang terus muter tanpa jeda. Gue liat ke belakang. Sepeda gue... dihancurin. Besi bengkok kayak tulang belakang orang tua yang terus dibebani hidup. Majalah gue... dirobek-robek, dilempar ke tanah. Lembarannya diterbangin angin, ngambang pelan... kayak harga diri gue yang ditiup realita. Dan yang paling nyesek? Di seberang jalan, adek gue masih nunggu. Duduk di trotoar dengan wajah bingung, nyender ke tas kecilnya, matanya nyari-nyari gue. Tapi yang dia dapet? Pemandangan kakaknya digelandang polisi, digiring kayak pelaku pemerkosa, padahal gue cuma... korban.</p>
+                <p>Gue pengen hilang. Tapi Tuhan malah nyeret gue makin dalam. Mobil berhenti. Pintu dibuka kasar. Bau keringet, asap rokok, dan ketidakadilan langsung nyamber kayak slap in the face. Selamat datang di kantor polisi, tempat di mana keadilan tidur dan fitnah jadi nyanyian sehari-hari. Mereka tarik gue masuk, kayak nenteng kantong kresek isinya daging basi. Gue diseret ke ruang sempit. Enggak mewah. Catnya ngelupas, kursinya bunyi “kreekk” setiap kali lo gerak. Tapi yang lebih rusak dari ruangan itu... adalah niat mereka. "Lo ngaku aja deh. Lo nembak dia kan?" Gue geleng. Suara gue kecil, "Bukan gue..." "LO! SIAPA LAGI! ADA BEKAS DARAH, ADA SENJATA, ADA LO! COCOK SEMUA. HUKUM ITU GAK BUTUH CERITA, NAK. CUMA BUTUH PELAKU YANG KAYA LO. PAS!"</p>
+                <p>Salah satu dari mereka, perut buncit, rambut tipis, kumis kayak selotip, nyalain rokok, terus ngeludah ke arah kaki gue. "Anak-anak sok jenius, sok main kode, sok cyber-hero. Lo pikir lo siapa? ROBIN HOOD? GUE TAU NAMA LO DI FORUM, ‘HELIX.2016’ KAN?" Gue langsung merinding. Jantung gue kaya drum metal konser underground. Mereka tau. "Pantesan semua kasus aneh, bocor semua data, semua nama kebongkar... ternyata lo, ya? Si anak majalah." Satu polisi lain nyamperin, mukul meja keras. "Makanya jangan coba main api, bro. Nih sekarang... lo kebakar sendiri."</p>
+                <p>Tiba-tiba mereka keluarin selembar berkas. Isinya screenshot-screenshot DM, kode, bahkan... foto gue waktu pake hoodie item. Salah satu dari mereka bisik, "Ini lo... lo pikir kalo lo benerin orang, orang bakal bener? Sekarang rasain, lo benerin sistem... sistem yang ngebenerin lo balik." "Lo bakal jadi pelaku abadi. Lo korban... yang kami sulap jadi monster. Dan publik? Gak akan peduli siapa lo sebenernya. Mereka cuma butuh headline. Dan headline-nya hari ini adalah: HELIX.2016 PEMBUNUH ANAKNYA PEJABAT." Gue... gak bisa nangis. Udah abis. Tapi dalam hati kecil gue, satu suara masih bisik: "Kalau mereka pikir ini akhir, tunggu aja sampai gue bebas."</p>
+                <p>Sore itu… langit kayak lagi demo. Hujan turun dengan amarah yang gak sempet diproses. Langit abu-abu gelap, persis kayak perasaan gue yang udah dikebiri harapan. Polisi bikin garis TKP di rumah Nazwa, rumah yang terlalu mewah buat dijadiin panggung tragedi. Bangunan lapis titanium, lantai marmer yang bisa ngaca, dan gue… si tukang majalah dari gang sempit yang sekarang berdiri di tengah-tengahnya. Gak cocok. Gak matching. Bagaikan… sepeda ontel di parkiran jet pribadi. Warga masuk. WARGA. Bukan detektif. Bukan tim forensik. Tapi warga dengan kamera HP dan akun TikTok. Salah satu dari mereka ngerekam sambil bisik ke temennya, “Wih… padahal cakep. Kayak pembunuh di film-film luar ya.” Yang satu nyeletuk, “Please deh… jangan adili peraturan ke orang good looking. Dia mungkin korban fashion doang.” Yang lain malah live sambil nambahin caption: “Hensem-hensem jagal, siapa takut?” Gue… gak tau harus nangis atau ketawa. Tapi yang keluar dari mulut gue cuma satu: “GUE BUKAN PELAKUNYA!!!”</p>
+                <p>Gue kejang di lantai marmer, masih pakai baju sekolah lusuh dan sepatu sobek. Polisi tarik gue dengan kasar. Mereka suruh gue berdiri di titik bekas darah Nazwa. Mereka dorong tangan gue, nenteng pistol bukti, kayak… kayak mereka bikin konten ulang taun, bukan investigasi pembunuhan. “Nih ya, lo berdiri di sini. Nah, ini tangan lo, giniin, terus seolah lo nembak. Oke? Kamera rolling…” APAAN TUH?! Gue mau teriak: “INI TKP APA SHOOTING FILM KALENG?!” Tapi suara gue dikalahin sama klik kamera dan bisik-bisik warga yang lebih demen drama daripada logika.</p>
+                <p>Malam turun. TKP udah jadi taman hiburan warga. Gue makin linglung. Gue gak tau lagi apa itu realitas. Gue cuma tau satu: Nama gue viral. Beritanya nyebar kayak tisu di ruang nangis: “Pelaku Penembakan Adalah Anak SMP Berinisial R”. “Helix.2016 Ternyata Dalang dari Segala Kekacauan Digital”. “Ganteng Tapi Mematikan, Ini Sosok Si Penjual Majalah Berdarah Dingin”. Sampai ada akun meme yang bikin ini: "When u download aimbot IRL". Lucu ya? Lucu, kalo hidup lo bukan yang jadi bahan. Gue dibawa balik ke kantor polisi. Dingin. Bukan cuma karena AC, tapi karena kebenaran udah dimutilasi. Mereka potong, mereka bentuk, biar pas ama narasi. Dan gue? Gue cuma karakter figuran yang harus dihabisi. Tapi yang paling bikin gue pengen ketawa… dingin… kaku… Adalah fakta bahwa semua ini... bisa dikendalikan sama satu orang: Ayahnya Nazwa. Orang penting. Licin. Punya akses, punya jalur, punya semuanya. Dia bisa bikin CCTV “error”, bisa nyetir media buat tutupin jejak, bahkan bisa beli opini publik kayak beli minuman kaleng. Dan yang gue tau pasti? Dia gak bakal berhenti sampai nama gue gak cuma dibuang... tapi dihancurkan, dibakar, dan dijadikan peringatan bagi siapa pun yang berani usik sistem ini.</p>
+            </section>
+    
+            <section class="story-chapter" id="bab13">
+                <h2>BAB 13 : DINGINNYA RUANG BERSAMA SEFREKUENSI</h2>
+                <p>Gue diseret. Bukan jalan kaki. Bukan juga digandeng baik-baik. Tapi didorong kayak guling ke dalam ruang siksaan berdinding besi yang dinginnya kayak lemari es rusak, bau, sempit, dan penuh manusia yang udah kehilangan arah. Seketika… Gue, bocah SMP berseragam biru putih lusuh, dilempar masuk ke kandang manusia-manusia yang bahkan udah lupa gimana caranya tersenyum. Mereka semua nampak lebih… dewasa. Bukan cuma secara usia. Tapi… matanya. Tatapan mereka bukan kayak orang, tapi kayak anjing liar yang udah kelamaan dikurung. Gak ada yang ngomong pas awal gue masuk. Cuma satu cowok gondrong, bertato api ungu di lehernya, ngelirik gue dan nyeletuk, "Heh… anak SMP? Salah masuk asrama apa gimana lu, Dek?"</p>
+                <p>Gue cuma duduk di pojok, nahan tangis yang nyangkut di tenggorokan. Lalu, satu orang lain nyeletuk sambil nyalain rokok (gak tau darimana dia dapetnya), "Woy, jangan ngeremehin, bro. Kadang yang kecil begini justru pembunuhnya psikopat." Mereka ketawa. Gue nggak. "Aku nggak ngelakuin apapun. Aku cuma dituduh, dipaksa ngaku. Bahkan aku gak ngerti kenapa aku disini." Mereka semua tiba-tiba hening. Gue pikir mereka bakal ceng-cengin. Tapi ternyata… "Sama." "Gue juga." "Kita semua juga, bro." Dan obrolan aneh itu dimulai. Sesi curhat narapidana. Bukan podcast, bukan talkshow, tapi obrolan gelap di sudut sel penjara.</p>
+                <p>Cowok gondrong itu, namanya Banu, cerita kalo dia dijebak atas kasus perampokan toko emas. Padahal waktu kejadian, dia lagi jaga warnet. Tapi gak ada CCTV yang bisa ngebuktiin itu. "Majikan gw takut diancam polisi. Ya udah… dia bilang gw kabur." "Terus lo?" "Ya masuk sini. Masuk, diem, ngambang." Orang satunya, laki-laki berbadan kurus tinggi, ngomong sambil ketawa hambar, "Gue dibilang nyabu, padahal cuma nyempilin bekas bungkus permen di tas temen gue. Ternyata temen gue... anaknya kapolsek." Ada juga satu orang yang seharusnya gak kelihatan serem tapi paling bikin merinding: Cowok berkacamata dengan suara kalem. "Aku ditahan karena dibilang stalking. Padahal aku cuma ngingetin orang soal postingannya. Mereka bilang aku pedofil." Gue cuma bisa manggut-manggut. Mereka semua… bukan orang baik, tapi juga bukan penjahat. Mereka adalah korban narasi. Korban cerita yang disusun orang lain. Sama kayak gue.</p>
+                <p>Tiba-tiba, Banu nanya, "Kalau lu, kasusnya apa, Dek?" Gue nahan napas. "Pembunuhan." Semua diam. "Tapi gue gak nembak. Gue bukan pelakunya. Gue bahkan trauma denger suara pistol." "Dan lo cakep," celetuk si kacamata kalem. "Itu masalah utamanya." Semua ketawa, kali ini bukan menghina, tapi kayak tawa orang yang udah gak percaya hidup. Gue ikut ketawa, tipis. Tawa yang pahit. Tawa yang dingin. Di ruangan sempit dan pengap itu, gue gak lagi sendiri. Gue bareng orang-orang yang udah dirobek sistem, dibungkus ulang, dan dilempar ke tempat ini. Tapi satu hal yang bikin mereka beda dari gue, Mereka gak punya satu tujuan besar: Memulihkan sebuah nama. Nama… yang bahkan bukan nama gue. Tapi nama Nazwa.</p>
+                <p>Gue duduk bersandar ke tembok, punggung gue berasa kayak rem belakang motor bebek, seret, keras, dan gak guna. Di sekeliling gue, para "pahlawan yang gagal narik rem kehidupan" mulai cerita satu-satu. “Bro, gue masuk gara-gara dituduh maling ayam,” kata Mas Dika, badannya kek besi tua, tapi matanya kayak anak kuliahan yang baru ditolak beasiswa. “Padahal ayamnya kabur sendiri. Gue cuma ngasih minum doang.” “Minum racun?” celetuk Bang Ucup, napi paling rame tapi paling sering nangis kalau malam. “Bukan! Minum air wudhu, biar jadi ayam soleh. Tapi yaudah, gue ikhlas. Ayamnya sekarang udah hidup bahagia… DI PENGGORENGAN!” Semua ketawa. Kecuali gue. Gue cuma senyum tipis kayak saldo ShopeePay abis karna beli gorengan.</p>
+                <p>Bang Ucup lanjut, “Gue? Gara-gara demo. Gue dorong pagar doang. Tapi katanya gue mau kudeta. Lah gue cuman dorong pagar, bukan dorong presiden.” "Eh, daripada gue," celetuk seorang bapak yang belum gue tau namanya. "Gue masuk gara-gara anak gue posting tweet: 'Indonesia negara gagal.' Tau-tau rumah gue digeledah, anak gue kabur, gue yang masuk." Yang lain ngikik. Ada yang ketawa sambil batuk. Gue makin diem. Lalu si Hendra, paling muda setelah gue, curhat, “Gue tuh ditahan karena katanya ngebegal... padahal gue cuma duduk di motor temen gue. Tapi temen gue pas dikejar polisi bilang, 'itu dia pelakunya!’ sambil nunjuk gue. Lah, anjir." “Makanya jangan punya temen. Temen itu racun,” Bang Ucup geleng-geleng. “Gue dulu punya temen, dia minjem duit, kabur. Gue samperin ke rumahnya, eh malah gue dilaporin ngerampok.”</p>
+                <p>Gue buka suara dikit, lirih, “Ade gue pasti sekarang nungguin gue di sekolah…” Mereka mendadak hening. “Dia selalu nungguin gue tiap pagi. Tapi sekarang… siapa yang nganterin dia?” Lalu suara Bang Ucup pelan, “Mungkin dia jalan sendiri. Tapi mungkin juga... sekarang dia lagi baca majalah jualan lo. Biar tetep ngerasa abang masih nemenin.” Gue senyum, tapi bukan senyum biasa. Senyum kayak abis ngeliat memes lucu... tapi di caption-nya ada tulisan "RIP lo, bro."</p>
+                <p class="modified">Gue gak tau kenapa di ruangan penuh kriminal kecil dan besar ini, justru tawa mereka lebih tulus daripada orang yang sok suci di luar sana. Mereka mungkin maling ayam, tapi gak pernah maling masa depan orang lain. Gue dituduh nembak seseorang. Tapi gue bahkan gak pernah punya pistol. Yang gue punya cuma semangat, dan itu pun dunia rampas. Dan sekarang… gue cuma nunggu. Nunggu adek gue nyariin. Nunggu ibu gue sembuh. Nunggu dunia sadar, kalau kadang, yang bersalah, gak pernah duduk di sel.</p>
+                <p>Jam dua pagi. Suara kipas angin rusak bunyinya makin absurd, kayak remix lagu dangdut hasil colokan kabel USB ke Indomaret. Suhu dalam sel? Panas. Tapi anehnya, kami semua justru lagi... ketawa. "Astagfirullah... Bang Dudung! Lu beneran jualan SIM palsu buat ikan cupang?" tanya salah satu tahanan, perutnya udah keram nahan ketawa. "Eh jangan salah. Cupang juga butuh identitas!" jawab Bang Dudung sambil nyengir, giginya tinggal dua, tapi confidence-nya setebal proposal bansos fiktif. Gue duduk di pojok, laptop imajiner di paha (karena laptop beneran udah disita penyidik siber). Di kepala gue, gue lagi ngetik: “Chapter 47: Ketika Tuhan Menciptakan Indonesia, Dia Lupa Update Firmware-nya.”</p>
+                <p>Semua diem sesaat. Lalu suara Pak Ucok, mantan pejabat kelurahan yang sekarang satu sel, pelan tapi nyelekit: "Kadang ya... yang bener malah masuk sel, yang salah jadi selebriti." Tertawa. Lagi. Tapi tiba-tiba… cahaya biru nyala dari sudut ruangan. Bukan pencerahan spiritual, bro. Tapi... projector mini?! "TARAA!!!" teriak si Plenger, tahanan paling absurd se-Bogor. Ternyata dia nemu projector hasil nyelundupin komponen dari radio rusak dan bohlam musholla. Sekarang, dia muter video... “Rapat Tapi Gak Merapat.mp4”. Iya, itu video bocoran yang gue rilis waktu masih di sekolah. Para guru debat soal harga parkir, kopi sachet siapa yang ilang, dan rencana merazia murid yang “terlalu pinter buat ukuran SMP.” Di layar, kepala sekolah muncul, muka penuh minyak dan niat busuk. "Ini nih, bapak pendidikan modern. Nyuruh siswa jujur, tapi markup nota pembelian printer!" seru Pak Ucok. Gue ngakak. Tapi dalemnya… perih. Karena sekarang, walau video itu viral, nama Helix masih jadi mitos. Gue? Masih Rangga. Cowok yang waktu SD dilabelin "anak yatim suka gambar", dan waktu SMP dilabelin "tukang majalah bau tinta." Bahkan sekarang di penjara, gue masih dicap "anak pinter yang gak laku"</p>
+                <p>"Bro," kata Plenger, ngunyah kacang yang entah dari mana asalnya, "Lu sadar gak? Lu tuh kayak... WiFi publik." "Hah?" gue bingung. "Iya. Berguna. Tapi gak pernah dianggap penting. Orang pake lu, tapi gak pernah tanya kabar lu." Semua: "WOIIIIII!!!!" Satu sel meledak ketawa. Sampai ada yang batuk darah (serius, tapi masih ketawa). Bang Dudung nyeletuk terakhir: “Besok kalau bebas, gue mau buka warung sate... tapi yang dijual cuma tusuknya. Biar orang inget: gak semua yang tajam itu harus melukai.”</p>
+            </section>
+    
+            <section class="story-chapter" id="bab14">
+                <h2>BAB 14 : PANGGILAN ATAS BALASAN MASA DAHULU</h2>
+                <p>Suara jeruji besi geser masih nempel di kepala gue. “Rangga. Keluar. Ada yang mau bicara sama kamu,” kata Pak Polisi, mukanya flat kayak roti tawar expired. Gue diajak ke ruangan sempit dengan bau karbol campur kopi sachet. Di ujung ruangan, ada satu telepon umum. Di belakang kaca pembatasnya… gue liat Natasya, adik gue. Dan di sampingnya... Bu Talitha. Guru yang dulu pernah cuek, kini matanya meneduh. Gue angkat gagang telepon.</p>
+                <p>“Bang, aku kangen banget...” suara Natasya bergetar. Gue senyum kecut, “Abang juga, dek.” “Aku tadi... habis lomba puisi. Juara satu,” suaranya pelan, “Tapi waktu naik panggung... aku malah pengen turun. Karena gak ada abang di sana.” Dada gue langsung ngilu. “Aku cerita semuanya ke Bu Talitha…” Kamera sedikit geser, menyorot Bu Talitha. “Rangga...” suaranya tenang tapi penuh tenaga. “Jarang sekali saya melihat anak seusia kamu yang memilih jalan seberat ini. Kamu bukan cuma bertahan. Kamu ngelindungin.” “Maafkan dunia yang terlalu sibuk memuji juara olimpiade, tapi lupa sama anak-anak yang tiap harinya harus menang lawan keadaan. Kamu pahlawan, Rangga.”</p>
+                <p>“Saya gak pahlawan, Bu. Saya cuma... pengen adek saya hidup tenang. Itu aja.” Natasya mulai terisak. “Dan aku pengen abang nganter aku lagi... walau cuma naik sepeda tua. Gak apa-apa Bang, yang penting kita bareng.” Gue gak tahan. Air mata gue tumpah. Bu Talitha meletakkan tangan di pundak Natasya. “Dan saya janji, Rangga... selama kamu di sana, Natasya gak akan pernah sendirian.” Sebelum sambungan ditutup, Natasya ngomong satu hal terakhir yang bakal gue simpen sampai kapan pun. “Bang… aku sayang banget sama abang. Dan aku bangga lahir dari keluarga kita. Karena walau kita gak punya apa-apa... kita punya abang.”</p>
+                <p class="modified">Setelah telepon itu nyaris ditutup, tiba-tiba di ujung sana, Natasya buru-buru manggil lagi. “Bang! Tunggu dulu! Kita belum pamit dengan cara kita!” Gue cepet-cepet angkat gagang lagi. “Apaan sih, Dek?” Dia ketawa kecil, lalu dengan gaya norak yang dulu sering kami lakuin waktu kecil, dia angkat tangan kanan, jempolnya dilipet ke dalam telapak tangan. “Langit biru saksi kita...” Gue otomatis ikut. “...Pelangi jadi perisai kita...” lanjut Natasya. “...Kalau abang pergi jauh...” “...Aku kirim cium lewat burung gereja.” Dia nyium ke kamera dengan gaya super lebay. “MUACH!!” Gue bales. “MUACHH!!” Lalu Natasya tutup dengan kalimat kode kami: “Kalau abang gak pulang... jangan sedih. Karena doa adek udah duluan sampai... dan akan terus jagain abang dari langit, sampe abang ketemu cahaya.” Gue angkat tangan, bentuk huruf L. Love. Dia balas dengan L juga. Klik. Koneksi mati.</p>
+                <p>Harapan cuma bisa sebentar singgah. Karena malam itu, pintu sel terbuka lagi. “Rangga Febrian?” Suara tenang, rendah, dan berwibawa. Di hadapan gue, berdiri seorang pria dengan jas hitam rapi. Dia duduk, meletakkan koper di meja. “Saya Raka. Ayah dari Raditya. Mungkin kamu ingat, anak yang dulu sempat kamu bantu di sekolah.” Gue langsung terdiam. Radit? Anak yang gue ajarin bikin zine Manusia Langit? “Iya, Pak... saya ingat.” “Dia baik, sekarang sudah lebih percaya diri. Dan itu... berkat kamu,” katanya sambil membuka koper berisi berkas-berkas rahasia. “Saya datang untuk membalas kebaikan kamu.”</p>
+                <p>Dia menyodorkan satu berkas. “Ini data tentang ayah Nazwa. Saya yakin kamu tahu siapa dia sebenarnya. Bukan hanya pebisnis. Tapi dalang di balik banyak manipulasi. Termasuk... keterlibatan dia dalam kasus kamu.” Gue melotot. “Dan kamu, Rangga... kamu satu dari sedikit anak muda yang berani melawan sistem itu.” “Itu justru alasan kenapa saya datang malam ini. Besok, kamu akan disidangkan. Dan kalau saya tidak turun tangan... sistem ini akan menghancurkanmu.” Dia berdiri, mengeluarkan lencana aneh dengan gambar pena, bintang, dan gagak. “Kalau kamu bebas dari semua ini... saya punya tawaran. Kesempatan untuk berada di sisi perubahan.” Dia pergi, tapi sebelum itu dia bilang, “Anak saya selalu bilang, kamu itu orang pertama yang bikin dia percaya kalau manusia bisa baik... tanpa imbalan.”</p>
+                <p>Malam sebelum persidangan, di tengah candaan para napi, gue gak bisa tenang. Sampai tiba-tiba... udara jadi beda. Dari celah jendela besi, gue bisa liat bayangan mobil-mobil hitam. Petugas jadi kaku. Yusuf, salah satu napi, berbisik, “Ngga... apapun yang terjadi, jangan tunjukin takut lo.” Lalu, langkah kaki berhenti di depan sel kami. Pintu terbuka. “Rangga. Jalan.” Gue melangkah keluar, ke lorong gelap, menuju satu ruangan. Dan di dalam sana... Pak Reno, ayahnya Nazwa, sudah menunggu.</p>
+                <p>Dia berdiri dengan dingin. “Kamu masih muda,” katanya, lalu tanpa peringatan, dia menampar gue keras dan membenturkan kepala gue ke meja besi. Alis gue sobek, darah menetes. “Dengar. Saya tidak membencimu. Saya hanya memastikan kamu memilih mati yang tenang.” Dia mengeluarkan foto ibu dan Natasya. “Lo ngaku di sidang nanti. Atau kita bakar semuanya, satu-satu. Dimulai dari lo.” Dia menyalakan korek, mendekatkannya ke tangan gue yang terborgol. Panasnya terasa menyiksa. “Di dunia ini, yang punya uang, punya cerita.” Dia pergi, meninggalkan gue dengan ancaman dan waktu satu jam untuk berpikir.</p>
+                <p>Langit siang itu pucat. Gedung pengadilan penuh orang. Gue berjalan dengan borgol, diteriaki "PEMBUNUH!". Di ruang sidang, dingin, formal, dan penuh kebencian. Pak Raka tak terlihat. Hati gue mencelos. Hakim menggebrak palu, memulai sidang. "Terdakwa. Apakah Anda... melakukannya?" Pertanyaan itu menggantung di udara. Ancaman Pak Reno terngiang-ngiang. "Saya..." suara gue pecah. Kerusuhan meledak di bangku penonton. Teriakan dan lemparan botol memenuhi ruangan.</p>
+                <p>"JAWAB SEKARANG JUGA!!" teriak hakim di tengah kekacauan. Dan saat palu hampir diketuk,  "Tunggu!!!" Pintu ruang sidang terbuka keras. Pak Raka masuk dengan timnya, membawa koper-koper bukti. Dia menaruh amplop tebal di meja hakim. "Data terbaru. Anda harus lihat ini." Semua diam. Hakim membuka amplop. Matanya melebar. “Bukti otentik. CCTV. Log panggilan. Rekaman pengakuan. Semuanya mengarah ke seseorang yang bukan terdakwa.”</p>
+                <p>Pak Raka melangkah ke depan. "Anak saya, Raditya, diselamatkan oleh Rangga. Anak ini pahlawan. Dan saya tidak akan diam melihat keadilan dibungkam." Wajah hakim berubah, menatap gue dengan rasa bersalah. Palu diangkat. Seketika sunyi. TOKKKKK! “Rangga dinyatakan tidak bersalah!” Semua meledak. Tepuk tangan dan tangisan haru. Tapi sebelum gue lega, pengacara Pak Reno melempar kursi. Kerusuhan pecah lagi. Pak Raka menarik gue ke bawah meja sidang. “Belum selesai, Nak. Tapi sekarang… kau selamat.”</p>
+                <p>Di bawah meja, gue melihat Pak Reno ditahan, mukanya merah karena ego. Bu Talitha, istrinya, menangis tanpa suara di kejauhan. Gue merangkak keluar. Flash kamera menggila. Tapi mata gue hanya tertuju pada satu sosok: adik gue, Natasya. Senyumnya secerah mentari. Gue lari memeluknya. Erat. Kami tertawa bersama. Untuk pertama kalinya, tawa itu terasa ringan.</p>
+            </section>
+        
+            <section class="prolog-epilog" id="epilog">
+                <h2>EPILOG</h2>
+                <p>Dunia luar itu... sepi, tapi dengan cara yang baik. Gue keluar dari gedung pengadilan bareng Natasya, disambut tepuk tangan yang ragu-ragu lalu bergemuruh dari kerumunan. Dunia yang tadinya melempar batu, sekarang malah melempar likes. Headline berita berbalik. #HelixHero trending.</p>
+                <p>Kami jalan kaki, tanpa tujuan, sampai akhirnya gue bilang, “Kita pulang, Nat. Ke tempat yang ada Mama.” Rumah kami masih sama. Catnya pudar, tapi hangat. Mama menunggu di sana. Kami bertiga berpelukan seperti puzzle yang akhirnya utuh. Di TV, berita penangkapan Pak Reno jadi tontonan utama. Karma, kali ini, tidak datang terlambat.</p>
+                <p>Beberapa bulan kemudian... gue kembali ke sekolah. Bukan dengan sepeda tua, tapi dengan sepeda baru berwarna biru langit, hadiah dari warga kompleks. Gue tetap Rangga si penjual majalah. Tapi sekarang, majalah gue laku keras. Isinya bukan lagi cuma gambar-gambar, tapi cerita-cerita anak yang suaranya tak pernah didengar, dengan nama “Suara NPC.” Majalah itu jadi bacaan wajib.</p>
+                <p>Soal Pak Raka dan tawarannya? Gue terima. Bukan untuk jadi agen rahasia. Gue jadi konsultan muda untuk yayasan anti-bullying yang dia dirikan. Tugas gue simpel: ngobrol sama anak-anak kayak gue, dengerin cerita mereka, dan bikin mereka percaya kalau suara mereka berharga. Laptop Acer 2010 gue yang rongsok sekarang ditaruh di museum kecil yayasan, dengan plakat bertuliskan: "Senjata Paling Mematikan: Hati yang Terluka dan Koneksi Internet".</p>
+                <p>Hidup gue nggak langsung jadi sempurna. Trauma suara tembakan masih suka datang di malam hari. Tapi sekarang, kalau itu terjadi, ada tangan Ibu yang ngelus kepala gue, dan suara cerewet Natasya yang nanya, "Bang, besok bikin majalah edisi apa?". Dan gue sadar, pahlawan itu nggak selamanya bertarung. Kadang, kemenangan terbesar seorang pahlawan adalah ketika dia akhirnya bisa pulang, dan menemukan kedamaian di tengah keluarganya yang utuh. <i>Cerita belum berakhir...</i></p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }, 1000);
+            });
+            const sections = document.querySelectorAll('.story-chapter, .prolog-epilog, .hero');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+            const navObserver = new IntersectionObserver((entries) => {
+                 entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        let targetId = id === 'hero' ? 'prolog' : id; // Treat hero as prolog for nav
+                        const activeLink = document.querySelector('.nav-link.active');
+                        if (activeLink) {
+                            activeLink.classList.remove('active');
+                        }
+                        const newActiveLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
+                        if (newActiveLink) {
+                            newActiveLink.classList.add('active');
+                        }
+                    }
+                });
+            }, { rootMargin: '-40% 0px -60% 0px'});
+            sections.forEach(section => {
+                navObserver.observe(section);
+            });
+            const menuToggle = document.getElementById('menu-toggle');
+            const sideNav = document.getElementById('side-nav');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    sideNav.classList.toggle('active');
+                    document.body.classList.toggle('nav-open');
+                });
+            }
+        }); 
+
+        const scrollIndicatorButton = document.querySelector('.scroll-indicator');
+        if (scrollIndicatorButton) {
+            scrollIndicatorButton.addEventListener('click', () => {
+               
+                window.location.href = 'https://codei81224.vercel.app/';
+            });
+        }
+
+        const music = document.getElementById('background-music');
+            function playMusicOnFirstInteraction() {
+                music.play().then(() => {
+                    document.removeEventListener('click', playMusicOnFirstInteraction);
+                    document.removeEventListener('touchstart', playMusicOnFirstInteraction);
+                }).catch(error => {
+                    console.log('Autoplay diblokir, menunggu interaksi pengguna lebih lanjut.');
+                });
+            }
+            document.addEventListener('click', playMusicOnFirstInteraction);
+            document.addEventListener('touchstart', playMusicOnFirstInteraction);
+    </script>
+</body>
+</html>
